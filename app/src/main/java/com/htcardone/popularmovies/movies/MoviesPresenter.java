@@ -49,16 +49,19 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             @Override
             public void onMoviesLoaded(List<Movie> movies) {
                 if (BuildConfig.DEBUG) {
-                    for (Movie movie : movies) {
-                        Log.d(LOG_TAG, movie.toString());
-                    }
+                    Log.d(LOG_TAG, "onMoviesLoaded");
                 }
+
+                mMoviesView.showMovies(movies);
                 mMoviesView.setLoadingIndicator(false);
             }
 
             @Override
             public void onDataNotAvailable() {
-                Log.i(LOG_TAG, "onDataNotAvailable");
+                if (BuildConfig.DEBUG) {
+                    Log.d(LOG_TAG, "onDataNotAvailable");
+                }
+                
                 mMoviesView.setLoadingIndicator(false);
             }
         });
