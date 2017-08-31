@@ -1,9 +1,11 @@
 package com.htcardone.popularmovies.data;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,13 +14,25 @@ import java.util.List;
 
 public class MoviesRepository implements MoviesDataSource {
 
+    private static String LOG_TAG = "[MoviesRepository]";
+
     private static MoviesRepository INSTANCE;
 
-    private final MoviesRemoteDataSource mMoviesRemoteDataSource;
-    // TODO implement local repository and cache
+    public static final int TYPE_SORT_BY_POPULAR = 0; // mCaches pos 0
+    public static final int TYPE_SORT_BY_TOP_RATED = 1; // mCaches pos 1
+
+    private MoviesRemoteDataSource mMoviesRemoteDataSource;
+    private List<List<Movie>> mCaches = new ArrayList<>(2);
+
+    /**
+     * Marks the cache as invalid, to force an update the next time data is requested.
+     */
+    private boolean mCacheIsDirty = true;
 
     private MoviesRepository(MoviesRemoteDataSource moviesRemoteDataSource) {
         mMoviesRemoteDataSource = moviesRemoteDataSource;
+        mCaches.add(null);
+        mCaches.add(null);
     }
 
     public static MoviesRepository getInstance(MoviesRemoteDataSource moviesRemoteDataSource) {
@@ -31,11 +45,31 @@ public class MoviesRepository implements MoviesDataSource {
 
     @Override
     public void getPopularMovies(@NonNull LoadMoviesCallback callback) {
+        // Respond immediately with cache if available and not dirty
+        if (mCaches.get(TYPE_SORT_BY_POPULAR) != null && !mCacheIsDirty) {
+            Log.d(LOG_TAG, "using cached movies");
+            callback.onMoviesLoaded(mCaches.get(TYPE_SORT_BY_POPULAR));
+            return;
+        }
+
+        Log.d(LOG_TAG, "fetch new data from the network");
+
+        // If the cache is dirty we need to fetch new data from the network.
         getPopularMoviesFromRemoteDataSource(callback);
     }
 
     @Override
     public void getTopRatedMovies(@NonNull LoadMoviesCallback callback) {
+        // Respond immediately with cache if available and not dirty
+        if (mCaches.get(TYPE_SORT_BY_TOP_RATED) != null && !mCacheIsDirty) {
+            Log.d(LOG_TAG, "using cached movies");
+            callback.onMoviesLoaded(mCaches.get(TYPE_SORT_BY_TOP_RATED));
+            return;
+        }
+
+        Log.d(LOG_TAG, "fetch new data from the network");
+
+        // If the cache is dirty we need to fetch new data from the network.
         getTopRatedMoviesFromRemoteDataSource(callback);
     }
 
@@ -44,6 +78,7 @@ public class MoviesRepository implements MoviesDataSource {
             @Override
             public void onMoviesLoaded(List<Movie> movies) {
                 callback.onMoviesLoaded(movies);
+                refreshCache(movies, TYPE_SORT_BY_POPULAR);
             }
 
             @Override
@@ -58,6 +93,7 @@ public class MoviesRepository implements MoviesDataSource {
             @Override
             public void onMoviesLoaded(List<Movie> movies) {
                 callback.onMoviesLoaded(movies);
+                refreshCache(movies, TYPE_SORT_BY_TOP_RATED);
             }
 
             @Override
@@ -65,5 +101,19 @@ public class MoviesRepository implements MoviesDataSource {
                 callback.onDataNotAvailable();
             }
         });
+    }
+
+    public void refreshMovies() {
+        mCacheIsDirty = true;
+    }
+
+    private void refreshCache(List<Movie> movies, int type) {
+        Log.d(LOG_TAG, "type=" + type + " movies=" + movies);
+        mCaches.set(type, movies);
+        mCacheIsDirty = false;
+    }
+
+    public Movie getMovie(int id, int type) {
+        return mCaches.get(type).get(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.htcardone.popularmovies.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.Movie;
 import com.htcardone.popularmovies.data.MoviesRepository;
 import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
+import com.htcardone.popularmovies.moviedetail.MovieDetailActivity;
 
 import java.util.List;
 
@@ -40,16 +42,23 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
         // RecyclerView setup
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(this, 2);
+        mLayoutManager = new GridLayoutManager(this, 4);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new MoviesAdapter(getApplicationContext());
+        MoviesAdapter.ListItemClickListener listItemClickListener = new MoviesAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(int clickedItemIndex) {
+                mMoviesPresenter.onMovieClicked(clickedItemIndex);
+            }
+        };
+
+        mAdapter = new MoviesAdapter(getApplicationContext(), listItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
 
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mMoviesPresenter.loadMovies();
+                mMoviesPresenter.loadMovies(true);
             }
         });
 
@@ -59,8 +68,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         mMoviesPresenter.start();
     }
 
@@ -85,20 +94,20 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         int id = item.getItemId();
 
         if (id == R.id.movies_action_refresh) {
-            mMoviesPresenter.loadMovies();
+            mMoviesPresenter.loadMovies(true);
             return true;
         }
 
         if (id == R.id.movies_action_sort_by_popularity) {
-            mMoviesPresenter.setMoviesSort(MoviesPresenter.SORT_BY_POPULARITY);
-            mMoviesPresenter.loadMovies();
+            mMoviesPresenter.setMoviesSort(MoviesPresenter.TYPE_SORT_BY_POPULAR);
+            mMoviesPresenter.loadMovies(false);
             item.setChecked(true);
             return true;
         }
 
         if (id == R.id.movies_action_sort_by_rating) {
-            mMoviesPresenter.setMoviesSort(MoviesPresenter.SORT_BY_RATING);
-            mMoviesPresenter.loadMovies();
+            mMoviesPresenter.setMoviesSort(MoviesPresenter.TYPE_SORT_BY_TOP_RATED);
+            mMoviesPresenter.loadMovies(false);
             item.setChecked(true);
             return true;
         }
@@ -113,19 +122,27 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
     @Override
     public void showLoadingError() {
-
+        //TODO showLoadingError
     }
 
     @Override
     public void showMovies(List<Movie> movies) {
         mAdapter.replaceData(movies);
+        mRecyclerView.scrollToPosition(0);
+    }
+
+    @Override
+    public void showMovieDetail(String movieId) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        //intent.putExtra(TaskDetailActivity.EXTRA_TASK_ID, taskId);
+        startActivity(intent);
     }
 
     @Override
     public void setViewTitle(int sortType) {
-        if (sortType == MoviesPresenter.SORT_BY_POPULARITY) {
+        if (sortType == MoviesPresenter.TYPE_SORT_BY_POPULAR) {
             setTitle(R.string.title_popular);
-        } else if (sortType == MoviesPresenter.SORT_BY_RATING) {
+        } else if (sortType == MoviesPresenter.TYPE_SORT_BY_TOP_RATED) {
             setTitle(R.string.title_rated);
         } else {
             setTitle(R.string.app_name);

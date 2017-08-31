@@ -24,9 +24,10 @@ import static android.support.v4.util.Preconditions.checkNotNull;
 public class MoviesPresenter implements MoviesContract.Presenter {
     private final String LOG_TAG = "[MoviesPresenter]";
 
-    public static final int SORT_BY_POPULARITY = 0;
-    public static int SORT_BY_RATING = 1;
-    private int sortBy = SORT_BY_POPULARITY;
+    public final static int TYPE_SORT_BY_POPULAR = MoviesRepository.TYPE_SORT_BY_POPULAR;
+    public final static int TYPE_SORT_BY_TOP_RATED = MoviesRepository.TYPE_SORT_BY_TOP_RATED;
+
+    private int actualList = TYPE_SORT_BY_POPULAR;
 
     private final MoviesRepository mMoviesRepository;
     private final MoviesContract.View mMoviesView;
@@ -42,19 +43,26 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     @Override
     public void start() {
-        loadMovies();
+        loadMovies(true);
     }
 
     @Override
-    public void loadMovies() {
-        Log.d(LOG_TAG, "loadMovies()");
-        mMoviesView.setLoadingIndicator(true);
+    public void loadMovies(boolean forceUpdate) {
+        if (forceUpdate) {
+            mMoviesRepository.refreshMovies();
+            mMoviesView.setLoadingIndicator(true);
+        }
 
-        if (sortBy == SORT_BY_POPULARITY) {
+        if (actualList == TYPE_SORT_BY_POPULAR) {
             getPopularMovies();
-        } else if (sortBy == SORT_BY_RATING) {
+        } else if (actualList == TYPE_SORT_BY_TOP_RATED) {
             getTopRatedMovies();
         }
+    }
+
+    @Override
+    public void openMovieDetails(Movie movie) {
+
     }
 
     private void getPopularMovies() {
@@ -65,7 +73,8 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         mMoviesRepository.getTopRatedMovies(loadMoviesCallback);
     }
 
-    private MoviesDataSource.LoadMoviesCallback loadMoviesCallback = new MoviesDataSource.LoadMoviesCallback() {
+    private MoviesDataSource.LoadMoviesCallback loadMoviesCallback =
+            new MoviesDataSource.LoadMoviesCallback() {
         @Override
         public void onMoviesLoaded(List<Movie> movies) {
             if (BuildConfig.DEBUG) {
@@ -73,7 +82,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             }
 
             mMoviesView.showMovies(movies);
-            mMoviesView.setViewTitle(sortBy);
+            mMoviesView.setViewTitle(actualList);
             mMoviesView.setLoadingIndicator(false);
         }
 
@@ -88,12 +97,12 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     };
 
     @Override
-    public void openMovieDetails() {
-
+    public void setMoviesSort(int type) {
+        actualList = type;
     }
 
     @Override
-    public void setMoviesSort(int type) {
-        sortBy = type;
+    public void onMovieClicked(int movieId) {
+        Log.d(LOG_TAG, "movieId=" + mMoviesRepository.getMovie(movieId, actualList));
     }
 }

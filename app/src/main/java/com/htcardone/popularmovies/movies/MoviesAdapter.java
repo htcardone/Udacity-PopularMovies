@@ -24,7 +24,8 @@ import static android.support.v4.util.Preconditions.checkNotNull;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemViewHolder> {
     private List<Movie> mDataSet;
-    private Context mContext;
+    private final Context mContext;
+    private final ListItemClickListener mOnClickListener;
 
     public class MovieItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.movies_poster_iv)
@@ -33,16 +34,28 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemV
         private MovieItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnClickListener.onListItemClick(getAdapterPosition());
+                }
+            });
         }
     }
 
-    public MoviesAdapter(Context context) {
-        mContext = context;
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
     }
 
-    public MoviesAdapter(Context context, List<Movie> dataSet) {
+    public MoviesAdapter(Context context, ListItemClickListener clickListener) {
         mContext = context;
-        dataSet = mDataSet;
+        mOnClickListener = clickListener;
+    }
+
+    public MoviesAdapter(Context context, ListItemClickListener clickListener, List<Movie> dataSet) {
+        mContext = context;
+        mOnClickListener = clickListener;
+        mDataSet = checkNotNull(dataSet);
     }
 
     public void replaceData(List<Movie> movies) {

@@ -5,8 +5,8 @@ package com.htcardone.popularmovies.moviedetail;
  */
 
 /**
- * Listens to user actions from the UI ({@link MovieDetailView}), retrieves the data and updates the
- * UI as required.
+ * Listens to user actions from the UI ({@link MovieDetailActivity}), retrieves the data and updates
+ * the UI as required.
  */
 
 public class MovieDetailPresenter implements MovieDetailContract.Presenter {

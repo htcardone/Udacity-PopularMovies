@@ -18,12 +18,14 @@ public interface MoviesContract {
         void setLoadingIndicator(boolean state);
         void showLoadingError();
         void showMovies(List<Movie> movies);
+        void showMovieDetail(String movieId);
         void setViewTitle(int sortType);
     }
 
     interface Presenter extends BasePresenter {
-        void loadMovies();
-        void openMovieDetails();
+        void loadMovies(boolean forceUpdate);
+        void openMovieDetails(Movie movie);
         void setMoviesSort(int sortType);
+        void onMovieClicked(int movieId);
     }
 }
