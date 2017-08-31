@@ -5,8 +5,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -79,6 +81,37 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.movies_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.movies_action_refresh) {
+            mMoviesPresenter.loadMovies();
+            return true;
+        }
+
+        if (id == R.id.movies_action_sort_by_popularity) {
+            mMoviesPresenter.setMoviesSort(MoviesPresenter.SORT_BY_POPULARITY);
+            mMoviesPresenter.loadMovies();
+            return true;
+        }
+
+        if (id == R.id.movies_action_sort_by_rating) {
+            mMoviesPresenter.setMoviesSort(MoviesPresenter.SORT_BY_RATING);
+            mMoviesPresenter.loadMovies();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void setLoadingIndicator(boolean state) {
         mRefreshLayout.setRefreshing(state);
     }
@@ -91,6 +124,17 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     @Override
     public void showMovies(List<Movie> movies) {
         mAdapter.replaceData(movies);
+    }
+
+    @Override
+    public void setViewTitle(int sortType) {
+        if (sortType == MoviesPresenter.SORT_BY_POPULARITY) {
+            setTitle(R.string.title_popular);
+        } else if (sortType == MoviesPresenter.SORT_BY_RATING) {
+            setTitle(R.string.title_rated);
+        } else {
+            setTitle(R.string.app_name);
+        }
     }
 
     public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemViewHolder> {

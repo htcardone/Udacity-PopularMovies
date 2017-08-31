@@ -23,6 +23,11 @@ import static android.support.v4.util.Preconditions.checkNotNull;
 
 public class MoviesPresenter implements MoviesContract.Presenter {
     private final String LOG_TAG = "[MoviesPresenter]";
+
+    public static final int SORT_BY_POPULARITY = 0;
+    public static int SORT_BY_RATING = 1;
+    private int sortBy = SORT_BY_POPULARITY;
+
     private final MoviesRepository mMoviesRepository;
     private final MoviesContract.View mMoviesView;
 
@@ -45,30 +50,50 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         Log.d(LOG_TAG, "loadMovies()");
         mMoviesView.setLoadingIndicator(true);
 
-        mMoviesRepository.getPopularMovies(new MoviesDataSource.LoadMoviesCallback() {
-            @Override
-            public void onMoviesLoaded(List<Movie> movies) {
-                if (BuildConfig.DEBUG) {
-                    Log.d(LOG_TAG, "onMoviesLoaded");
-                }
-
-                mMoviesView.showMovies(movies);
-                mMoviesView.setLoadingIndicator(false);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                if (BuildConfig.DEBUG) {
-                    Log.d(LOG_TAG, "onDataNotAvailable");
-                }
-                
-                mMoviesView.setLoadingIndicator(false);
-            }
-        });
+        if (sortBy == SORT_BY_POPULARITY) {
+            getPopularMovies();
+        } else if (sortBy == SORT_BY_RATING) {
+            getTopRatedMovies();
+        }
     }
+
+    private void getPopularMovies() {
+        mMoviesRepository.getPopularMovies(loadMoviesCallback);
+    }
+
+    private void getTopRatedMovies() {
+        mMoviesRepository.getTopRatedMovies(loadMoviesCallback);
+    }
+
+    private MoviesDataSource.LoadMoviesCallback loadMoviesCallback = new MoviesDataSource.LoadMoviesCallback() {
+        @Override
+        public void onMoviesLoaded(List<Movie> movies) {
+            if (BuildConfig.DEBUG) {
+                Log.d(LOG_TAG, "onMoviesLoaded");
+            }
+
+            mMoviesView.showMovies(movies);
+            mMoviesView.setViewTitle(sortBy);
+            mMoviesView.setLoadingIndicator(false);
+        }
+
+        @Override
+        public void onDataNotAvailable() {
+            if (BuildConfig.DEBUG) {
+                Log.d(LOG_TAG, "onDataNotAvailable");
+            }
+
+            mMoviesView.setLoadingIndicator(false);
+        }
+    };
 
     @Override
     public void openMovieDetails() {
 
+    }
+
+    @Override
+    public void setMoviesSort(int type) {
+        sortBy = type;
     }
 }

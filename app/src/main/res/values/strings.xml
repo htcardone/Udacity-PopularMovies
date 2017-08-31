@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+
+    <string name="title_popular">Most Popular Movies</string>
+    <string name="title_rated">Top Rating Movies</string>
+
+    <!-- Movies Menu -->
+    <string name="movies_action_sort_by_popularity">Sort By Popularity</string>
+    <string name="movies_action_sort_by_rating">Sort By Rating</string>
+    <string name="movies_action_refresh">Refresh</string>
 </resources>
