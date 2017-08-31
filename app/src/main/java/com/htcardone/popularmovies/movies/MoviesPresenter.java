@@ -7,7 +7,6 @@ package com.htcardone.popularmovies.movies;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.htcardone.popularmovies.BuildConfig;
 import com.htcardone.popularmovies.data.Movie;
 import com.htcardone.popularmovies.data.MoviesDataSource;
 import com.htcardone.popularmovies.data.MoviesRepository;
@@ -77,9 +76,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             new MoviesDataSource.LoadMoviesCallback() {
         @Override
         public void onMoviesLoaded(List<Movie> movies) {
-            if (BuildConfig.DEBUG) {
-                Log.d(LOG_TAG, "onMoviesLoaded");
-            }
+            Log.d(LOG_TAG, "onMoviesLoaded");
 
             mMoviesView.showMovies(movies);
             mMoviesView.setViewTitle(actualList);
@@ -88,10 +85,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
         @Override
         public void onDataNotAvailable() {
-            if (BuildConfig.DEBUG) {
-                Log.d(LOG_TAG, "onDataNotAvailable");
-            }
-
+            Log.d(LOG_TAG, "onDataNotAvailable");
             mMoviesView.setLoadingIndicator(false);
         }
     };
@@ -104,5 +98,6 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     @Override
     public void onMovieClicked(int movieId) {
         Log.d(LOG_TAG, "movieId=" + mMoviesRepository.getMovie(movieId, actualList));
+        mMoviesView.showMovieDetail(movieId, actualList);
     }
 }

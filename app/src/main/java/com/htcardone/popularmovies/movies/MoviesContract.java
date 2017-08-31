@@ -18,7 +18,7 @@ public interface MoviesContract {
         void setLoadingIndicator(boolean state);
         void showLoadingError();
         void showMovies(List<Movie> movies);
-        void showMovieDetail(String movieId);
+        void showMovieDetail(int movieId, int sortType);
         void setViewTitle(int sortType);
     }
 

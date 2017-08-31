@@ -132,9 +132,10 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
-    public void showMovieDetail(String movieId) {
+    public void showMovieDetail(int movieId, int sortType) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
-        //intent.putExtra(TaskDetailActivity.EXTRA_TASK_ID, taskId);
+        intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, movieId);
+        intent.putExtra(MovieDetailActivity.EXTRA_SORT_TYPE, sortType);
         startActivity(intent);
     }
 
