@@ -92,12 +92,14 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         if (id == R.id.movies_action_sort_by_popularity) {
             mMoviesPresenter.setMoviesSort(MoviesPresenter.SORT_BY_POPULARITY);
             mMoviesPresenter.loadMovies();
+            item.setChecked(true);
             return true;
         }
 
         if (id == R.id.movies_action_sort_by_rating) {
             mMoviesPresenter.setMoviesSort(MoviesPresenter.SORT_BY_RATING);
             mMoviesPresenter.loadMovies();
+            item.setChecked(true);
             return true;
         }
 

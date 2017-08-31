@@ -9,13 +9,17 @@
         android:title="@string/movies_action_refresh"
         android:icon="@drawable/ic_refresh_white_24dp"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/movies_action_sort_by_popularity"
-        android:title="@string/movies_action_sort_by_popularity"
-        app:showAsAction="never"/>
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/movies_action_sort_by_popularity"
+            android:title="@string/movies_action_sort_by_popularity"
+            android:checked="true"
+            app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/movies_action_sort_by_rating"
-        android:title="@string/movies_action_sort_by_rating"
-        app:showAsAction="never"/>
+        <item
+            android:id="@+id/movies_action_sort_by_rating"
+            android:title="@string/movies_action_sort_by_rating"
+            app:showAsAction="never"/>
+    </group>
 </menu>
