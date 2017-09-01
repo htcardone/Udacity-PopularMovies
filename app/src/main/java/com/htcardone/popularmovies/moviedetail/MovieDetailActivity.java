@@ -1,6 +1,7 @@
 package com.htcardone.popularmovies.moviedetail;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +27,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.movie_detail_tv_poster_image) ImageView mPosterImageView;
     @BindView(R.id.movie_detail_tv_original_title_value) TextView mOriginalTitleTextView;
     @BindView(R.id.movie_detail_tv_release_date_value) TextView mReleaseDateTextView;
-    @BindView(R.id.movie_detail_tv_user_rating_value) TextView mOverviewTextView;
+    @BindView(R.id.movie_detail_tv_overview_value) TextView mOverviewTextView;
     @BindView(R.id.movie_detail_rb_rating) RatingBar mRatingBar;
 
     private MovieDetailContract.Presenter mPresenter;
@@ -36,6 +37,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
+        }
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,6 +72,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         setTitle(movie.getTitle());
         mOriginalTitleTextView.setText(movie.getOriginalTitle());
         mReleaseDateTextView.setText(movie.getReleaseDate());
+        // TODO use device's date format
         mOverviewTextView.setText(movie.getOverview());
         mRatingBar.setRating(movie.getVoteAverage() / 2);
 
