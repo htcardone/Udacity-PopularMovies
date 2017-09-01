@@ -27,5 +27,6 @@ public interface MoviesContract {
         void openMovieDetails(Movie movie);
         void setMoviesSort(int sortType);
         void onMovieClicked(int movieId);
+        int getMoviesSort();
     }
 }

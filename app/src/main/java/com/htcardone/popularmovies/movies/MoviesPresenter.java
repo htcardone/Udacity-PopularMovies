@@ -26,7 +26,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     public final static int TYPE_SORT_BY_POPULAR = MoviesRepository.TYPE_SORT_BY_POPULAR;
     public final static int TYPE_SORT_BY_TOP_RATED = MoviesRepository.TYPE_SORT_BY_TOP_RATED;
 
-    private int actualList = TYPE_SORT_BY_POPULAR;
+    private int currentSort = TYPE_SORT_BY_POPULAR;
 
     private final MoviesRepository mMoviesRepository;
     private final MoviesContract.View mMoviesView;
@@ -52,9 +52,9 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             mMoviesView.setLoadingIndicator(true);
         }
 
-        if (actualList == TYPE_SORT_BY_POPULAR) {
+        if (currentSort == TYPE_SORT_BY_POPULAR) {
             getPopularMovies();
-        } else if (actualList == TYPE_SORT_BY_TOP_RATED) {
+        } else if (currentSort == TYPE_SORT_BY_TOP_RATED) {
             getTopRatedMovies();
         }
     }
@@ -79,7 +79,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             Log.d(LOG_TAG, "onMoviesLoaded");
 
             mMoviesView.showMovies(movies);
-            mMoviesView.setViewTitle(actualList);
+            mMoviesView.setViewTitle(currentSort);
             mMoviesView.setLoadingIndicator(false);
         }
 
@@ -92,12 +92,17 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     @Override
     public void setMoviesSort(int type) {
-        actualList = type;
+        currentSort = type;
     }
 
     @Override
     public void onMovieClicked(int movieId) {
-        Log.d(LOG_TAG, "movieId=" + mMoviesRepository.getMovie(movieId, actualList));
-        mMoviesView.showMovieDetail(movieId, actualList);
+        Log.d(LOG_TAG, "movieId=" + mMoviesRepository.getMovie(movieId, currentSort));
+        mMoviesView.showMovieDetail(movieId, currentSort);
+    }
+
+    @Override
+    public int getMoviesSort() {
+        return currentSort;
     }
 }

@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View {
 
     private static final String LOG_TAG = "[MoviesActivity]";
+    private static final String CURRENT_SORT_KEY = "sortKey";
     private MoviesContract.Presenter mMoviesPresenter;
     private MoviesAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -65,6 +66,13 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         // Create the presenter
         mMoviesPresenter = new MoviesPresenter(MoviesRepository.getInstance(
                 MoviesRemoteDataSource.getInstance()), this);
+
+        // Load previously saved state, if available.
+        if (savedInstanceState != null) {
+            int currentSort = savedInstanceState.getInt(CURRENT_SORT_KEY);
+            mMoviesPresenter.setMoviesSort(currentSort);
+            setViewTitle(currentSort);
+        }
     }
 
     @Override
@@ -80,6 +88,12 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         }
 
         mMoviesPresenter = presenter;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(CURRENT_SORT_KEY, mMoviesPresenter.getMoviesSort());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
