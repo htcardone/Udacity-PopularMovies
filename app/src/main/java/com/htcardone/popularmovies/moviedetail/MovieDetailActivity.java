@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.Movie;
 import com.squareup.picasso.Picasso;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,8 +76,16 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     public void showMovieDetails(Movie movie) {
         setTitle(movie.getTitle());
         mOriginalTitleTextView.setText(movie.getOriginalTitle());
-        mReleaseDateTextView.setText(movie.getReleaseDate());
-        // TODO use device's date format
+
+        // TODO move this to a Utils class
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = dateFormat.parse(movie.getReleaseDate());
+            mReleaseDateTextView.setText(DateFormat.getDateFormat(this).format(date));
+        } catch (ParseException e) {
+            mReleaseDateTextView.setText(movie.getReleaseDate());
+        }
+
         mOverviewTextView.setText(movie.getOverview());
         mRatingBar.setRating(movie.getVoteAverage() / 2);
 
