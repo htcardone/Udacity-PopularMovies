@@ -17,7 +17,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     
-    <style name="MovieDetailLabelFont" parent="@android:style/TextAppearance.DeviceDefault">
+    <style name="MovieDetailLabelFont" parent="@android:style/TextAppearance.DeviceDefault.Small">
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="MovieDetailValueFont" parent="@android:style/TextAppearance.DeviceDefault.Medium">
         <item name="android:textStyle">bold</item>
     </style>
 

@@ -34,7 +34,7 @@ public class Movie {
 	private String releaseDate;
 
 	@SerializedName("vote_average")
-	private double voteAverage;
+	private float voteAverage;
 
 	@SerializedName("popularity")
 	private double popularity;
@@ -120,11 +120,11 @@ public class Movie {
 		return releaseDate;
 	}
 
-	public void setVoteAverage(double voteAverage){
+	public void setVoteAverage(float voteAverage){
 		this.voteAverage = voteAverage;
 	}
 
-	public double getVoteAverage(){
+	public float getVoteAverage(){
 		return voteAverage;
 	}
 
