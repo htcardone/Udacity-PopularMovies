@@ -101,7 +101,7 @@ public class Movie {
 	}
 
 	public String getPosterPath(){
-		return "http://image.tmdb.org/t/p/w185" + posterPath;
+		return "http://image.tmdb.org/t/p/w342" + posterPath;
 	}
 
 	public void setBackdropPath(String backdropPath){
@@ -109,7 +109,7 @@ public class Movie {
 	}
 
 	public String getBackdropPath(){
-		return backdropPath;
+		return "https://image.tmdb.org/t/p/w500" + backdropPath;
 	}
 
 	public void setReleaseDate(String releaseDate){
