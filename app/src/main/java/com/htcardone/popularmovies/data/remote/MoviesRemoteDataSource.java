@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.htcardone.popularmovies.BuildConfig;
 import com.htcardone.popularmovies.data.MoviesDataSource;
 
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,6 +24,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     private static MoviesRemoteDataSource INSTANCE;
     private static final String API_KEY = BuildConfig.THE_MOVIE_DB_API_KEY;
     private final TmdbHttpApi tmdbHttpApi;
+    private String language;
 
     private MoviesRemoteDataSource() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -30,6 +33,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
                 .build();
 
         tmdbHttpApi = retrofit.create(TmdbHttpApi.class);
+        language = Locale.getDefault().getLanguage() + "-" + Locale.getDefault().getCountry();
     }
 
     public static MoviesRemoteDataSource getInstance() {
@@ -42,7 +46,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
 
     @Override
     public void getPopularMovies(@NonNull final LoadMoviesCallback callback) {
-        tmdbHttpApi.getPopularMovies(API_KEY).enqueue(new Callback<PopularResponse>() {
+        tmdbHttpApi.getPopularMovies(API_KEY, language).enqueue(new Callback<PopularResponse>() {
             @Override
             public void onResponse(Call<PopularResponse> call, Response<PopularResponse> response) {
                 if(response.isSuccessful()) {
@@ -62,7 +66,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
 
     @Override
     public void getTopRatedMovies(@NonNull final LoadMoviesCallback callback) {
-        tmdbHttpApi.getTopRatedMovies(API_KEY).enqueue(new Callback<TopRatedResponse>() {
+        tmdbHttpApi.getTopRatedMovies(API_KEY, language).enqueue(new Callback<TopRatedResponse>() {
             @Override
             public void onResponse(Call<TopRatedResponse> call, Response<TopRatedResponse> response) {
                 if (response.isSuccessful()) {
@@ -82,9 +86,11 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
 
     private interface TmdbHttpApi {
         @GET("movie/popular?api_key=" + API_KEY)
-        Call<PopularResponse> getPopularMovies(@Query("api_key") String apiKey);
+        Call<PopularResponse> getPopularMovies(@Query("api_key") String apiKey,
+                                               @Query("language") String language);
 
         @GET("movie/top_rated?api_key=" + API_KEY)
-        Call<TopRatedResponse> getTopRatedMovies(@Query("api_key") String apiKey);
+        Call<TopRatedResponse> getTopRatedMovies(@Query("api_key") String apiKey,
+                                                 @Query("language") String language);
     }
 }
