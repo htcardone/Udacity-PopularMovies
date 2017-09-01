@@ -101,7 +101,8 @@ public class Movie {
 	}
 
 	public String getPosterPath(){
-		return "http://image.tmdb.org/t/p/w342" + posterPath;
+		//TODO check user connection type to determine the image size
+		return "http://image.tmdb.org/t/p/w500" + posterPath;
 	}
 
 	public void setBackdropPath(String backdropPath){
@@ -109,6 +110,7 @@ public class Movie {
 	}
 
 	public String getBackdropPath(){
+		//TODO check user connection type to determine the image size
 		return "https://image.tmdb.org/t/p/w500" + backdropPath;
 	}
 
