@@ -1,4 +1,5 @@
 <resources>
+    <!-- TODO translate strings to pt -->
     <string name="app_name">Popular Movies</string>
 
     <string name="title_popular">Most Popular Movies</string>
@@ -12,4 +13,9 @@
     <string name="movies_load_error">
         It was not possible to load the movies, please try again later.
     </string>
+
+    <!-- acivity_movie_detail -->
+    <string name="movie_detail_tv_original_title_label">Original Title</string>
+    <string name="movie_detail_tv_release_date_label">Release Date</string>
+    <string name="movie_detail_tv_user_rating_label">User Rating</string>
 </resources>
