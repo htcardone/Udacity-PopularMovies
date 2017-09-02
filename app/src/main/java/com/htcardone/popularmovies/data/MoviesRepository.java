@@ -18,9 +18,6 @@ public class MoviesRepository implements MoviesDataSource {
 
     private static MoviesRepository INSTANCE;
 
-    public static final int TYPE_SORT_BY_POPULAR = 0; // mCaches pos 0
-    public static final int TYPE_SORT_BY_TOP_RATED = 1; // mCaches pos 1
-
     private MoviesRemoteDataSource mMoviesRemoteDataSource;
     private List<List<Movie>> mCaches = new ArrayList<>(2);
 
@@ -43,57 +40,21 @@ public class MoviesRepository implements MoviesDataSource {
         return INSTANCE;
     }
 
-    @Override
-    public void getPopularMovies(@NonNull LoadMoviesCallback callback) {
+    public void getMovies(@NonNull final int sortType, @NonNull final LoadMoviesCallback callback) {
         // Respond immediately with cache if available and not dirty
-        if (mCaches.get(TYPE_SORT_BY_POPULAR) != null && !mCacheIsDirty) {
-            Log.d(LOG_TAG, "using cached movies");
-            callback.onMoviesLoaded(mCaches.get(TYPE_SORT_BY_POPULAR));
+        if (mCaches.get(sortType) != null && !mCacheIsDirty) {
+            Log.d(LOG_TAG, "using cached movies sortType=" + sortType);
+            callback.onMoviesLoaded(mCaches.get(sortType), sortType);
             return;
         }
 
-        Log.d(LOG_TAG, "fetch new data from the network");
-
         // If the cache is dirty we need to fetch new data from the network.
-        getPopularMoviesFromRemoteDataSource(callback);
-    }
-
-    @Override
-    public void getTopRatedMovies(@NonNull LoadMoviesCallback callback) {
-        // Respond immediately with cache if available and not dirty
-        if (mCaches.get(TYPE_SORT_BY_TOP_RATED) != null && !mCacheIsDirty) {
-            Log.d(LOG_TAG, "using cached movies");
-            callback.onMoviesLoaded(mCaches.get(TYPE_SORT_BY_TOP_RATED));
-            return;
-        }
-
-        Log.d(LOG_TAG, "fetch new data from the network");
-
-        // If the cache is dirty we need to fetch new data from the network.
-        getTopRatedMoviesFromRemoteDataSource(callback);
-    }
-
-    private void getPopularMoviesFromRemoteDataSource(@NonNull final LoadMoviesCallback callback) {
-        mMoviesRemoteDataSource.getPopularMovies(new LoadMoviesCallback() {
+        Log.d(LOG_TAG, "fetch new data from the network sortType=" + sortType);
+        mMoviesRemoteDataSource.getMovies(sortType, new LoadMoviesCallback() {
             @Override
-            public void onMoviesLoaded(List<Movie> movies) {
-                callback.onMoviesLoaded(movies);
-                refreshCache(movies, TYPE_SORT_BY_POPULAR);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                callback.onDataNotAvailable();
-            }
-        });
-    }
-
-    private void getTopRatedMoviesFromRemoteDataSource(@NonNull final LoadMoviesCallback callback) {
-        mMoviesRemoteDataSource.getTopRatedMovies(new LoadMoviesCallback() {
-            @Override
-            public void onMoviesLoaded(List<Movie> movies) {
-                callback.onMoviesLoaded(movies);
-                refreshCache(movies, TYPE_SORT_BY_TOP_RATED);
+            public void onMoviesLoaded(List<Movie> movies, int sortType) {
+                callback.onMoviesLoaded(movies, sortType);
+                refreshCache(movies, sortType);
             }
 
             @Override
@@ -108,7 +69,6 @@ public class MoviesRepository implements MoviesDataSource {
     }
 
     private void refreshCache(List<Movie> movies, int type) {
-        Log.d(LOG_TAG, "type=" + type + " movies=" + movies);
         mCaches.set(type, movies);
         mCacheIsDirty = false;
     }

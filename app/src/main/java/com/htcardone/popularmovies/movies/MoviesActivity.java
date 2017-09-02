@@ -59,7 +59,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mMoviesPresenter.loadMovies(true);
+                mMoviesPresenter.loadMovies(true, mMoviesPresenter.getMoviesSort());
             }
         });
 
@@ -108,20 +108,18 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         int id = item.getItemId();
 
         if (id == R.id.movies_action_refresh) {
-            mMoviesPresenter.loadMovies(true);
+            mMoviesPresenter.loadMovies(true, mMoviesPresenter.getMoviesSort());
             return true;
         }
 
         if (id == R.id.movies_action_sort_by_popularity) {
-            mMoviesPresenter.setMoviesSort(MoviesPresenter.TYPE_SORT_BY_POPULAR);
-            mMoviesPresenter.loadMovies(false);
+            mMoviesPresenter.loadMovies(false, MoviesPresenter.TYPE_SORT_BY_POPULAR);
             item.setChecked(true);
             return true;
         }
 
         if (id == R.id.movies_action_sort_by_rating) {
-            mMoviesPresenter.setMoviesSort(MoviesPresenter.TYPE_SORT_BY_TOP_RATED);
-            mMoviesPresenter.loadMovies(false);
+            mMoviesPresenter.loadMovies(false, MoviesPresenter.TYPE_SORT_BY_TOP_RATED);
             item.setChecked(true);
             return true;
         }

@@ -23,7 +23,7 @@ public interface MoviesContract {
     }
 
     interface Presenter extends BasePresenter {
-        void loadMovies(boolean forceUpdate);
+        void loadMovies(boolean forceUpdate, int sortType);
         void openMovieDetails(Movie movie);
         void setMoviesSort(int sortType);
         void onMovieClicked(int movieId);

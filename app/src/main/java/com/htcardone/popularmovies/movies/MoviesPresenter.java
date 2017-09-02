@@ -42,21 +42,17 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     @Override
     public void start() {
-        loadMovies(true);
+        loadMovies(true, currentSort);
     }
 
     @Override
-    public void loadMovies(boolean forceUpdate) {
+    public void loadMovies(boolean forceUpdate, int sortType) {
         if (forceUpdate) {
             mMoviesRepository.refreshMovies();
             mMoviesView.setLoadingIndicator(true);
         }
 
-        if (currentSort == TYPE_SORT_BY_POPULAR) {
-            getPopularMovies();
-        } else if (currentSort == TYPE_SORT_BY_TOP_RATED) {
-            getTopRatedMovies();
-        }
+        mMoviesRepository.getMovies(sortType, loadMoviesCallback);
     }
 
     @Override
@@ -64,20 +60,12 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     }
 
-    private void getPopularMovies() {
-        mMoviesRepository.getPopularMovies(loadMoviesCallback);
-    }
-
-    private void getTopRatedMovies() {
-        mMoviesRepository.getTopRatedMovies(loadMoviesCallback);
-    }
-
     private MoviesDataSource.LoadMoviesCallback loadMoviesCallback =
             new MoviesDataSource.LoadMoviesCallback() {
         @Override
-        public void onMoviesLoaded(List<Movie> movies) {
+        public void onMoviesLoaded(List<Movie> movies, int sortType) {
             Log.d(LOG_TAG, "onMoviesLoaded");
-
+            currentSort = sortType;
             mMoviesView.showMovies(movies);
             mMoviesView.setViewTitle(currentSort);
             mMoviesView.setLoadingIndicator(false);

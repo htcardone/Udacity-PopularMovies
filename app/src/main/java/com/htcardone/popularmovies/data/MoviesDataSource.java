@@ -10,10 +10,12 @@ import java.util.List;
 
 public interface MoviesDataSource {
     interface LoadMoviesCallback {
-        void onMoviesLoaded(List<Movie> movies);
+        void onMoviesLoaded(List<Movie> movies, int sortType);
         void onDataNotAvailable();
     }
 
-    void getPopularMovies(@NonNull LoadMoviesCallback callback);
-    void getTopRatedMovies(@NonNull LoadMoviesCallback callback);
+    public static final int TYPE_SORT_BY_POPULAR = 0; // mCaches pos 0
+    public static final int TYPE_SORT_BY_TOP_RATED = 1; // mCaches pos 1
+
+    void getMovies(@NonNull int sortType, @NonNull LoadMoviesCallback callback);
 }

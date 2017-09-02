@@ -13,6 +13,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -45,12 +46,19 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     }
 
     @Override
-    public void getPopularMovies(@NonNull final LoadMoviesCallback callback) {
-        tmdbHttpApi.getPopularMovies(API_KEY, language).enqueue(new Callback<PopularResponse>() {
+    public void getMovies(@NonNull final int sortType, @NonNull final LoadMoviesCallback callback) {
+        String sort = "";
+        if (sortType == TYPE_SORT_BY_POPULAR) {
+            sort = "popular";
+        } else if (sortType == TYPE_SORT_BY_TOP_RATED) {
+            sort = "top_rated";
+        }
+
+        tmdbHttpApi.getMovies(sort, API_KEY, language).enqueue(new Callback<PopularResponse>() {
             @Override
             public void onResponse(Call<PopularResponse> call, Response<PopularResponse> response) {
                 if(response.isSuccessful()) {
-                    callback.onMoviesLoaded(response.body().getResults());
+                    callback.onMoviesLoaded(response.body().getResults(), sortType);
                 } else {
                     callback.onDataNotAvailable();
                     //TODO handle response status code
@@ -64,33 +72,11 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
         });
     }
 
-    @Override
-    public void getTopRatedMovies(@NonNull final LoadMoviesCallback callback) {
-        tmdbHttpApi.getTopRatedMovies(API_KEY, language).enqueue(new Callback<TopRatedResponse>() {
-            @Override
-            public void onResponse(Call<TopRatedResponse> call, Response<TopRatedResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onMoviesLoaded(response.body().getResults());
-                } else {
-                    callback.onDataNotAvailable();
-                    //TODO handle response status code
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TopRatedResponse> call, Throwable t) {
-                callback.onDataNotAvailable();
-            }
-        });
-    }
-
     private interface TmdbHttpApi {
-        @GET("movie/popular?api_key=" + API_KEY)
-        Call<PopularResponse> getPopularMovies(@Query("api_key") String apiKey,
-                                               @Query("language") String language);
-
-        @GET("movie/top_rated?api_key=" + API_KEY)
-        Call<TopRatedResponse> getTopRatedMovies(@Query("api_key") String apiKey,
-                                                 @Query("language") String language);
+        @GET("movie/{sort}?api_key=" + API_KEY)
+        Call<PopularResponse> getMovies(
+                @Path("sort") String sort,
+                @Query("api_key") String apiKey,
+                @Query("language") String language);
     }
 }
