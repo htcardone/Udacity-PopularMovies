@@ -30,6 +30,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     private final MoviesRepository mMoviesRepository;
     private final MoviesContract.View mMoviesView;
+    private boolean mFirstLoad[] = {true, true};
 
     public MoviesPresenter(@NonNull MoviesRepository moviesRepository,
                            @NonNull MoviesContract.View moviesView) {
@@ -42,11 +43,17 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     @Override
     public void start() {
-        loadMovies(true, currentSort);
+        loadMovies(false, currentSort);
     }
 
     @Override
     public void loadMovies(boolean forceUpdate, int sortType) {
+        Log.d(LOG_TAG, "forceUpdate=" + forceUpdate + " mFirstLoad=" + mFirstLoad[sortType]);
+        if (mFirstLoad[sortType]) {
+            forceUpdate = true;
+            mFirstLoad[sortType] = false;
+        }
+
         if (forceUpdate) {
             mMoviesRepository.refreshMovies();
             mMoviesView.setLoadingIndicator(true);
