@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.Movie;
@@ -134,7 +135,7 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
     @Override
     public void showLoadingError() {
-        //TODO showLoadingError
+        Toast.makeText(this, getString(R.string.movies_load_error), Toast.LENGTH_LONG).show();
     }
 
     @Override

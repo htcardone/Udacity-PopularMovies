@@ -82,6 +82,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         public void onDataNotAvailable() {
             Log.d(LOG_TAG, "onDataNotAvailable");
             mMoviesView.setLoadingIndicator(false);
+            mMoviesView.showLoadingError();
         }
     };
 
