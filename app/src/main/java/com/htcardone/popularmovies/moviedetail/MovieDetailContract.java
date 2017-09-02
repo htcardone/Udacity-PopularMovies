@@ -1,9 +1,5 @@
 package com.htcardone.popularmovies.moviedetail;
 
-/**
- * Created by henrique.cardone on 29/08/2017.
- */
-
 import com.htcardone.popularmovies.BasePresenter;
 import com.htcardone.popularmovies.BaseView;
 import com.htcardone.popularmovies.data.Movie;

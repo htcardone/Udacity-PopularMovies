@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+@SuppressWarnings({"WeakerAccess", "CanBeFinal"})
 public class MoviesActivity extends AppCompatActivity implements MoviesContract.View {
 
     private static final String LOG_TAG = "[MoviesActivity]";

@@ -14,8 +14,12 @@
         It was not possible to load the movies, please try again later.
     </string>
 
-    <!-- acivity_movie_detail -->
+    <!-- activity_movie_detail -->
     <string name="movie_detail_tv_original_title_label">Original Title</string>
     <string name="movie_detail_tv_release_date_label">Release Date</string>
     <string name="movie_detail_tv_user_rating_label">User Rating</string>
+
+    <!-- TODO improve content description -->
+    <string name="movie_detail_backdrop_img_desc">Movie backdrop</string>
+    <string name="movie_detail_poster_img_desc">Movie poster</string>
 </resources>

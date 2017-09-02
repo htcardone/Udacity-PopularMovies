@@ -16,10 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-/**
- * Created by henrique.cardone on 30/08/2017.
- */
-
+@SuppressWarnings("CanBeFinal")
 public class MoviesRemoteDataSource implements MoviesDataSource {
 
     private static MoviesRemoteDataSource INSTANCE;
@@ -46,7 +43,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final int sortType, @NonNull final LoadMoviesCallback callback) {
+    public void getMovies(final int sortType, @NonNull final LoadMoviesCallback callback) {
         String sort = "";
         if (sortType == TYPE_SORT_BY_POPULAR) {
             sort = "popular";
@@ -56,8 +53,9 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
 
         tmdbHttpApi.getMovies(sort, API_KEY, language).enqueue(new Callback<PopularResponse>() {
             @Override
-            public void onResponse(Call<PopularResponse> call, Response<PopularResponse> response) {
+            public void onResponse(@NonNull Call<PopularResponse> call, @NonNull Response<PopularResponse> response) {
                 if(response.isSuccessful()) {
+                    //noinspection ConstantConditions
                     callback.onMoviesLoaded(response.body().getResults(), sortType);
                 } else {
                     callback.onDataNotAvailable();
@@ -66,7 +64,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
             }
 
             @Override
-            public void onFailure(Call<PopularResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<PopularResponse> call, @NonNull Throwable t) {
                 callback.onDataNotAvailable();
             }
         });

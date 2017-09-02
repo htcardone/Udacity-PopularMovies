@@ -1,9 +1,5 @@
 package com.htcardone.popularmovies.moviedetail;
 
-/**
- * Created by henrique.cardone on 29/08/2017.
- */
-
 import android.support.annotation.NonNull;
 
 import com.htcardone.popularmovies.data.Movie;

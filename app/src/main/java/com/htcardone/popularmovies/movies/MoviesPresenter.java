@@ -1,9 +1,5 @@
 package com.htcardone.popularmovies.movies;
 
-/**
- * Created by henrique.cardone on 29/08/2017.
- */
-
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -20,6 +16,7 @@ import static android.support.v4.util.Preconditions.checkNotNull;
  * UI as required.
  */
 
+@SuppressWarnings("CanBeFinal")
 public class MoviesPresenter implements MoviesContract.Presenter {
     private final String LOG_TAG = "[MoviesPresenter]";
 
@@ -60,11 +57,6 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         }
 
         mMoviesRepository.getMovies(sortType, loadMoviesCallback);
-    }
-
-    @Override
-    public void openMovieDetails(Movie movie) {
-
     }
 
     private MoviesDataSource.LoadMoviesCallback loadMoviesCallback =

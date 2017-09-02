@@ -5,7 +5,8 @@ import com.htcardone.popularmovies.data.Movie;
 
 import java.util.List;
 
-public class TopRatedResponse{
+@SuppressWarnings("unused")
+class TopRatedResponse{
 
 	@SerializedName("page")
 	private int page;

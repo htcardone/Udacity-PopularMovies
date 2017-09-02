@@ -1,9 +1,5 @@
 package com.htcardone.popularmovies.movies;
 
-/**
- * Created by henrique.cardone on 29/08/2017.
- */
-
 import com.htcardone.popularmovies.BasePresenter;
 import com.htcardone.popularmovies.BaseView;
 import com.htcardone.popularmovies.data.Movie;
@@ -24,7 +20,6 @@ public interface MoviesContract {
 
     interface Presenter extends BasePresenter {
         void loadMovies(boolean forceUpdate, int sortType);
-        void openMovieDetails(Movie movie);
         void setMoviesSort(int sortType);
         void onMovieClicked(int movieId);
         int getMoviesSort();

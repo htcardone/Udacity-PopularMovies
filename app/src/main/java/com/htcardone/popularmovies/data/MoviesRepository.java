@@ -8,10 +8,7 @@ import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by henrique.cardone on 30/08/2017.
- */
-
+@SuppressWarnings("CanBeFinal")
 public class MoviesRepository implements MoviesDataSource {
 
     private static String LOG_TAG = "[MoviesRepository]";
@@ -40,7 +37,8 @@ public class MoviesRepository implements MoviesDataSource {
         return INSTANCE;
     }
 
-    public void getMovies(@NonNull final int sortType, @NonNull final LoadMoviesCallback callback) {
+    @Override
+    public void getMovies(final int sortType, @NonNull final LoadMoviesCallback callback) {
         // Respond immediately with cache if available and not dirty
         if (mCaches.get(sortType) != null && !mCacheIsDirty) {
             Log.d(LOG_TAG, "using cached movies sortType=" + sortType);

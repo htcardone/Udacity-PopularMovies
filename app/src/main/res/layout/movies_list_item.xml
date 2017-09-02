@@ -9,5 +9,5 @@
         android:src="@drawable/poster_placeholder"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:contentDescription="Movie Poster"/>
+        android:contentDescription="@string/movie_detail_poster_img_desc"/>
 </FrameLayout>

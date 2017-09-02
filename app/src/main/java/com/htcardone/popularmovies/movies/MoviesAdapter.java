@@ -18,10 +18,6 @@ import butterknife.ButterKnife;
 
 import static android.support.v4.util.Preconditions.checkNotNull;
 
-/**
- * Created by henrique.cardone on 31/08/2017.
- */
-
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemViewHolder> {
     private List<Movie> mDataSet;
     private final Context mContext;

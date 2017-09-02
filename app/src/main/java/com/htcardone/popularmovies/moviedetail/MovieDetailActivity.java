@@ -1,5 +1,6 @@
 package com.htcardone.popularmovies.moviedetail;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,19 +22,27 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+@SuppressWarnings({"WeakerAccess", "CanBeFinal"})
 public class MovieDetailActivity extends AppCompatActivity implements MovieDetailContract.View {
 
     private static final String LOG_TAG = "[MovieDetailActivity]";
     public static final String EXTRA_MOVIE_ID = "movieId";
     public static final String EXTRA_SORT_TYPE = "sortType";
 
-    @BindView(R.id.movie_detail_toolbar) Toolbar mToolbar;
-    @BindView(R.id.movie_detail_backdrop_image) ImageView mBackdrdpImageView;
-    @BindView(R.id.movie_detail_tv_poster_image) ImageView mPosterImageView;
-    @BindView(R.id.movie_detail_tv_original_title_value) TextView mOriginalTitleTextView;
-    @BindView(R.id.movie_detail_tv_release_date_value) TextView mReleaseDateTextView;
-    @BindView(R.id.movie_detail_tv_overview_value) TextView mOverviewTextView;
-    @BindView(R.id.movie_detail_rb_rating) RatingBar mRatingBar;
+    @BindView(R.id.movie_detail_toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.movie_detail_backdrop_image)
+    ImageView mBackdropImageView;
+    @BindView(R.id.movie_detail_tv_poster_image)
+    ImageView mPosterImageView;
+    @BindView(R.id.movie_detail_tv_original_title_value)
+    TextView mOriginalTitleTextView;
+    @BindView(R.id.movie_detail_tv_release_date_value)
+    TextView mReleaseDateTextView;
+    @BindView(R.id.movie_detail_tv_overview_value)
+    TextView mOverviewTextView;
+    @BindView(R.id.movie_detail_rb_rating)
+    RatingBar mRatingBar;
 
     private MovieDetailContract.Presenter mPresenter;
 
@@ -44,11 +53,14 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //noinspection deprecation
             getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
         }
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mPresenter = new MovieDetailPresenter(this);
 
@@ -78,7 +90,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         mOriginalTitleTextView.setText(movie.getOriginalTitle());
 
         // TODO move this to a Utils class
+        @SuppressLint("SimpleDateFormat") //using date format from TMDB API
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         try {
             Date date = dateFormat.parse(movie.getReleaseDate());
             mReleaseDateTextView.setText(DateFormat.getDateFormat(this).format(date));
@@ -91,7 +105,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
         Picasso.with(this)
                 .load(movie.getBackdropPath())
-                .into(mBackdrdpImageView);
+                .into(mBackdropImageView);
 
         Picasso.with(this)
                 .load(movie.getPosterPath())
