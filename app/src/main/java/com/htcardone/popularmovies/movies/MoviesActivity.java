@@ -1,6 +1,7 @@
 package com.htcardone.popularmovies.movies;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -44,8 +45,10 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
         ButterKnife.bind(this);
 
         // RecyclerView setup
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(this, 4);
+        int nunColumns = getResources().getConfiguration()
+                .orientation == Configuration.ORIENTATION_PORTRAIT ? 4 : 5;
+
+        mLayoutManager = new GridLayoutManager(this, nunColumns);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         MoviesAdapter.ListItemClickListener listItemClickListener = new MoviesAdapter.ListItemClickListener() {
