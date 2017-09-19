@@ -1,4 +1,4 @@
-package com.htcardone.popularmovies.data;
+package com.htcardone.popularmovies.data.model;
 
 import com.google.gson.annotations.SerializedName;
 

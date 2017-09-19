@@ -12,7 +12,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.htcardone.popularmovies.R;
-import com.htcardone.popularmovies.data.Movie;
+import com.htcardone.popularmovies.data.model.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;

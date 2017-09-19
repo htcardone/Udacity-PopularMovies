@@ -1,12 +1,15 @@
 package com.htcardone.popularmovies.data.remote;
 
 import com.google.gson.annotations.SerializedName;
-import com.htcardone.popularmovies.data.model.Movie;
+import com.htcardone.popularmovies.data.model.Review;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
-class PopularResponse {
+public class ReviewsResponse {
+
+	@SerializedName("id")
+	private int id;
 
 	@SerializedName("page")
 	private int page;
@@ -15,37 +18,25 @@ class PopularResponse {
 	private int totalPages;
 
 	@SerializedName("results")
-	private List<Movie> results;
+	private List<Review> results;
 
 	@SerializedName("total_results")
 	private int totalResults;
 
-	public void setPage(int page){
-		this.page = page;
+	public int getId(){
+		return id;
 	}
 
 	public int getPage(){
 		return page;
 	}
 
-	public void setTotalPages(int totalPages){
-		this.totalPages = totalPages;
-	}
-
 	public int getTotalPages(){
 		return totalPages;
 	}
 
-	public void setResults(List<Movie> results){
-		this.results = results;
-	}
-
-	public List<Movie> getResults(){
+	public List<Review> getResults(){
 		return results;
-	}
-
-	public void setTotalResults(int totalResults){
-		this.totalResults = totalResults;
 	}
 
 	public int getTotalResults(){
@@ -55,8 +46,9 @@ class PopularResponse {
 	@Override
  	public String toString(){
 		return 
-			"PopularResponse{" +
-			"page = '" + page + '\'' + 
+			"ReviewsResponse{" +
+			"id = '" + id + '\'' + 
+			",page = '" + page + '\'' + 
 			",total_pages = '" + totalPages + '\'' + 
 			",results = '" + results + '\'' + 
 			",total_results = '" + totalResults + '\'' + 

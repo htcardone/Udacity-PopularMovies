@@ -1,7 +1,7 @@
 package com.htcardone.popularmovies.data.remote;
 
 import com.google.gson.annotations.SerializedName;
-import com.htcardone.popularmovies.data.Movie;
+import com.htcardone.popularmovies.data.model.Movie;
 
 import java.util.List;
 

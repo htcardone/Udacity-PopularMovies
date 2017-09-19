@@ -2,7 +2,7 @@ package com.htcardone.popularmovies.moviedetail;
 
 import com.htcardone.popularmovies.BasePresenter;
 import com.htcardone.popularmovies.BaseView;
-import com.htcardone.popularmovies.data.Movie;
+import com.htcardone.popularmovies.data.model.Movie;
 
 /**
  * This specifies the contract between the view and the presenter.

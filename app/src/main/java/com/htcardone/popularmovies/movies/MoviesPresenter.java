@@ -3,7 +3,7 @@ package com.htcardone.popularmovies.movies;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.htcardone.popularmovies.data.Movie;
+import com.htcardone.popularmovies.data.model.Movie;
 import com.htcardone.popularmovies.data.MoviesDataSource;
 import com.htcardone.popularmovies.data.MoviesRepository;
 

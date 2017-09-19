@@ -3,6 +3,7 @@ package com.htcardone.popularmovies.data;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.htcardone.popularmovies.data.model.Movie;
 import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
 
 import java.util.ArrayList;

@@ -2,6 +2,8 @@ package com.htcardone.popularmovies.data;
 
 import android.support.annotation.NonNull;
 
+import com.htcardone.popularmovies.data.model.Movie;
+
 import java.util.List;
 
 public interface MoviesDataSource {

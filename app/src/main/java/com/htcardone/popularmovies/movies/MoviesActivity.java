@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.htcardone.popularmovies.R;
-import com.htcardone.popularmovies.data.Movie;
+import com.htcardone.popularmovies.data.model.Movie;
 import com.htcardone.popularmovies.data.MoviesRepository;
 import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
 import com.htcardone.popularmovies.moviedetail.MovieDetailActivity;
