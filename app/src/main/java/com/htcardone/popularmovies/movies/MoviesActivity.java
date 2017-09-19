@@ -109,6 +109,12 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.getItem(mMoviesPresenter.getMoviesSort() + 1).setChecked(true);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
