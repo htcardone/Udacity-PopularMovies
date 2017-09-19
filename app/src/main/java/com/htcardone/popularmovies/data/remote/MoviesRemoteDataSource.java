@@ -70,10 +70,65 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
         });
     }
 
+    @Override
+    public void getVideos(int movieId, @NonNull final LoadVideosCallback callback) {
+        tmdbHttpApi.getVideos(movieId, API_KEY, language).enqueue(new Callback<VideosResponse>() {
+            @Override
+            public void onResponse(Call<VideosResponse> call, Response<VideosResponse> response) {
+                if(response.isSuccessful()) {
+                    //noinspection ConstantConditions
+                    callback.onVideosLoaded(response.body().getResults());
+                } else {
+                    callback.onDataNotAvailable();
+                    //TODO handle response status code
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VideosResponse> call, Throwable t) {
+                callback.onDataNotAvailable();
+            }
+        });
+
+    }
+
+    @Override
+    public void getReviews(int movieId, @NonNull final LoadReviewsCallback callback) {
+        tmdbHttpApi.getReviews(movieId, API_KEY, language).enqueue(new Callback<ReviewsResponse>() {
+            @Override
+            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+                if(response.isSuccessful()) {
+                    //noinspection ConstantConditions
+                    callback.onReviewsLoaded(response.body().getResults());
+                } else {
+                    callback.onDataNotAvailable();
+                    //TODO handle response status code
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
     private interface TmdbHttpApi {
         @GET("movie/{sort}?api_key=" + API_KEY)
         Call<PopularResponse> getMovies(
                 @Path("sort") String sort,
+                @Query("api_key") String apiKey,
+                @Query("language") String language);
+
+        @GET("movie/{movieId}/videos")
+        Call<VideosResponse> getVideos(
+                @Path("movieId") int movieId,
+                @Query("api_key") String apiKey,
+                @Query("language") String language);
+
+        @GET("movie/{movieId}/reviews")
+        Call<ReviewsResponse> getReviews(
+                @Path("id") int movieId,
                 @Query("api_key") String apiKey,
                 @Query("language") String language);
     }
