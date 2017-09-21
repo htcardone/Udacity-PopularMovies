@@ -128,7 +128,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
 
         @GET("movie/{movieId}/reviews")
         Call<ReviewsResponse> getReviews(
-                @Path("id") int movieId,
+                @Path("movieId") int movieId,
                 @Query("api_key") String apiKey,
                 @Query("language") String language);
     }

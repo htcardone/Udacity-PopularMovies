@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.htcardone.popularmovies.data.model.Movie;
+import com.htcardone.popularmovies.data.model.Review;
 import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class MoviesRepository implements MoviesDataSource {
     private static MoviesRepository INSTANCE;
 
     private MoviesRemoteDataSource mMoviesRemoteDataSource;
-    private List<List<Movie>> mCaches = new ArrayList<>(2);
+    private List<List<Movie>> mMoviesCaches = new ArrayList<>(2);
 
     /**
      * Marks the cache as invalid, to force an update the next time data is requested.
@@ -26,8 +27,8 @@ public class MoviesRepository implements MoviesDataSource {
 
     private MoviesRepository(MoviesRemoteDataSource moviesRemoteDataSource) {
         mMoviesRemoteDataSource = moviesRemoteDataSource;
-        mCaches.add(null);
-        mCaches.add(null);
+        mMoviesCaches.add(null);
+        mMoviesCaches.add(null);
     }
 
     public static MoviesRepository getInstance(MoviesRemoteDataSource moviesRemoteDataSource) {
@@ -41,9 +42,9 @@ public class MoviesRepository implements MoviesDataSource {
     @Override
     public void getMovies(final int sortType, @NonNull final LoadMoviesCallback callback) {
         // Respond immediately with cache if available and not dirty
-        if (mCaches.get(sortType) != null && !mCacheIsDirty) {
+        if (mMoviesCaches.get(sortType) != null && !mCacheIsDirty) {
             Log.d(LOG_TAG, "using cached movies sortType=" + sortType);
-            callback.onMoviesLoaded(mCaches.get(sortType), sortType);
+            callback.onMoviesLoaded(mMoviesCaches.get(sortType), sortType);
             return;
         }
 
@@ -63,16 +64,26 @@ public class MoviesRepository implements MoviesDataSource {
         });
     }
 
+    @Override
+    public void getVideos(int movieId, @NonNull LoadVideosCallback callback) {
+        mMoviesRemoteDataSource.getVideos(movieId, callback);
+    }
+
+    @Override
+    public void getReviews(int movieId, @NonNull LoadReviewsCallback callback) {
+        mMoviesRemoteDataSource.getReviews(movieId, callback);
+    }
+
     public void refreshMovies() {
         mCacheIsDirty = true;
     }
 
     private void refreshCache(List<Movie> movies, int type) {
-        mCaches.set(type, movies);
+        mMoviesCaches.set(type, movies);
         mCacheIsDirty = false;
     }
 
     public Movie getMovie(int id, int type) {
-        return mCaches.get(type).get(id);
+        return mMoviesCaches.get(type).get(id);
     }
 }
