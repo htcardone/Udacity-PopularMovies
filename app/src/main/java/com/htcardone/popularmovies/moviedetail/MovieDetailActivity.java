@@ -2,22 +2,29 @@ package com.htcardone.popularmovies.moviedetail;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.model.Movie;
+import com.htcardone.popularmovies.data.model.Review;
+import com.htcardone.popularmovies.data.model.Video;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,8 +50,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     TextView mOverviewTextView;
     @BindView(R.id.movie_detail_rb_rating)
     RatingBar mRatingBar;
+    @BindView(R.id.movie_detail_rv_videos)
+    RecyclerView mVideosRecyclerView;
 
     private MovieDetailContract.Presenter mPresenter;
+    private VideosAdapter mVideosAdapter;
+    private RecyclerView.LayoutManager mVideosLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +83,17 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
             int sortType = intentFromMovies.getExtras().getInt(EXTRA_SORT_TYPE);
             mPresenter.loadMovie(movieId, sortType);
         }
+
+        // Videos RecyclerView setup
+        mVideosLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mVideosRecyclerView.setLayoutManager(mVideosLayoutManager);
+        mVideosAdapter = new VideosAdapter(this, new VideosAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(String youTubeKey) {
+                openYouTubeVideo(youTubeKey);
+            }
+        });
+        mVideosRecyclerView.setAdapter(mVideosAdapter);
     }
 
     @Override
@@ -82,6 +104,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         }
 
         mPresenter = presenter;
+    }
+
+    @Override
+    public void openYouTubeVideo(String youTubeKey) {
+        Intent intent = new  Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.youtube.com/watch?v=" + youTubeKey));
+        startActivity(intent);
     }
 
     @Override
@@ -110,5 +139,18 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         Picasso.with(this)
                 .load(movie.getPosterPath())
                 .into(mPosterImageView);
+    }
+
+    @Override
+    public void showReviews(List<Review> reviewList) {
+
+    }
+
+    @Override
+    public void showVideos(List<Video> videoList) {
+        for (Video video : videoList) {
+            Log.d(LOG_TAG, video.toString());
+            mVideosAdapter.replaceData(videoList);
+        }
     }
 }

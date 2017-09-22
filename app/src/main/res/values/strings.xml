@@ -22,4 +22,14 @@
     <!-- TODO improve content description -->
     <string name="movie_detail_backdrop_img_desc">Movie backdrop</string>
     <string name="movie_detail_poster_img_desc">Movie poster</string>
+
+    <!-- Fakes -->
+    <string name="fake_large_paragraph">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget augue ac elit
+        tincidunt finibus. Nam ac maximus enim. Nulla tellus purus, ullamcorper vitae ex aliquam,
+        finibus eleifend nunc. Nunc dapibus, nibh quis tempus dapibus, ante neque accumsan justo,
+        sit amet venenatis est mauris ut libero. Nullam tempus risus quis nulla gravida viverra.
+        Nam laoreet nisi nec diam elementum fermentum. Morbi sed felis vel libero malesuada pretium
+        nec nec tellus.
+    </string>
 </resources>

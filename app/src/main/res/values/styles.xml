@@ -26,6 +26,7 @@
     </style>
 
     <style name="MovieDetailOverviewFont" parent="@android:style/TextAppearance.DeviceDefault.Medium">
+        <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
 </resources>

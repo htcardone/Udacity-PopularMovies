@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_gravity="center"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="12dp"
+        card_view:cardElevation="4dp"
+        card_view:cardCornerRadius="4dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/videos_thumbnail_iv"
+                tools:src="@drawable/yt_thumbnail"
+                android:layout_width="0dp"
+                android:layout_height="135dp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/videos_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:lines="1"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintLeft_toRightOf="@+id/imageView"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/videos_thumbnail_iv"
+                tools:text="Trailer Name - long title"
+                card_view:layout_constraintHorizontal_bias="0.0"
+                card_view:layout_constraintVertical_bias="0.5" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+                card_view:layout_constraintTop_toTopOf="@+id/videos_thumbnail_iv"
+                card_view:layout_constraintBottom_toBottomOf="@+id/videos_thumbnail_iv"
+                card_view:layout_constraintRight_toRightOf="@+id/videos_thumbnail_iv"
+                card_view:layout_constraintLeft_toLeftOf="@+id/videos_thumbnail_iv" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/yt_icon"
+                android:layout_marginTop="4dp"
+                card_view:layout_constraintTop_toBottomOf="@+id/videos_thumbnail_iv"
+                android:layout_marginLeft="4dp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="4dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
