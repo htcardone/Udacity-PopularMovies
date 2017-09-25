@@ -143,14 +143,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void showReviews(List<Review> reviewList) {
-
+        for (Review review : reviewList) {
+            Log.d(LOG_TAG, review.toString());
+        }
     }
 
     @Override
     public void showVideos(List<Video> videoList) {
-        for (Video video : videoList) {
-            Log.d(LOG_TAG, video.toString());
-            mVideosAdapter.replaceData(videoList);
-        }
+        mVideosAdapter.replaceData(videoList);
     }
 }

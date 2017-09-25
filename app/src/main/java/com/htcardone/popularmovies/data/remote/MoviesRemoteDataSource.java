@@ -114,7 +114,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     }
 
     private interface TmdbHttpApi {
-        @GET("movie/{sort}?api_key=" + API_KEY)
+        @GET("movie/{sort}")
         Call<PopularResponse> getMovies(
                 @Path("sort") String sort,
                 @Query("api_key") String apiKey,
