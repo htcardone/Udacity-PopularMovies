@@ -52,10 +52,15 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     RatingBar mRatingBar;
     @BindView(R.id.movie_detail_rv_videos)
     RecyclerView mVideosRecyclerView;
+    @BindView(R.id.movie_detail_rv_reviews)
+    RecyclerView mReviewsRecyclerView;
 
     private MovieDetailContract.Presenter mPresenter;
+
     private VideosAdapter mVideosAdapter;
+    private ReviewsAdapter mReviewsAdapter;
     private RecyclerView.LayoutManager mVideosLayoutManager;
+    private RecyclerView.LayoutManager mReviewsLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +99,17 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
             }
         });
         mVideosRecyclerView.setAdapter(mVideosAdapter);
+
+        // Reviews RecyclerView setup
+        mReviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mReviewsRecyclerView.setLayoutManager(mReviewsLayoutManager);
+        mReviewsAdapter = new ReviewsAdapter(this, new ReviewsAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(String reviewUrl) {
+                openReviewUrl(reviewUrl);
+            }
+        });
+        mReviewsRecyclerView.setAdapter(mReviewsAdapter);
     }
 
     @Override
@@ -110,6 +126,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     public void openYouTubeVideo(String youTubeKey) {
         Intent intent = new  Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://www.youtube.com/watch?v=" + youTubeKey));
+        startActivity(intent);
+    }
+
+    @Override
+    public void openReviewUrl(String reviewUrl) {
+        Intent intent = new  Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(reviewUrl));
         startActivity(intent);
     }
 
@@ -143,9 +166,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void showReviews(List<Review> reviewList) {
-        for (Review review : reviewList) {
-            Log.d(LOG_TAG, review.toString());
-        }
+        mReviewsAdapter.replaceData(reviewList);
     }
 
     @Override

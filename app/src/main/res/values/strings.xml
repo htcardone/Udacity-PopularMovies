@@ -23,6 +23,10 @@
     <string name="movie_detail_backdrop_img_desc">Movie backdrop</string>
     <string name="movie_detail_poster_img_desc">Movie poster</string>
 
+    <!-- reviews_list_item -->
+    <string name="review_by">By</string>
+    <string name="review_open_full_review">Open Full Review</string>
+
     <!-- Fakes -->
     <string name="fake_large_paragraph">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget augue ac elit
@@ -31,5 +35,13 @@
         sit amet venenatis est mauris ut libero. Nullam tempus risus quis nulla gravida viverra.
         Nam laoreet nisi nec diam elementum fermentum. Morbi sed felis vel libero malesuada pretium
         nec nec tellus.
+    </string>
+    <string name="fake_review">
+        The first half of this movie is a huge delight and a huge thrill. Hugh Jackman and Patrick
+        Stewart are so entertaining to watch as characters they\'ve known for 17 years. They\'ve
+        taken their characters a step further here in a script that allows them to explore
+        themselves emotionally more than ever before. This movie is strictly part-drama. Yes,
+        that\'s right. Finally, a Marvel superhero movie you can confidently stamp the drama genre
+        tag on.
     </string>
 </resources>

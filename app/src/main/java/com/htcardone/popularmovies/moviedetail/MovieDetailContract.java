@@ -18,6 +18,7 @@ public interface MovieDetailContract {
         void showReviews(List<Review> reviewList);
         void showVideos(List<Video> videoList);
         void openYouTubeVideo(String youTubeKey);
+        void openReviewUrl(String reviewUrl);
     }
 
     interface Presenter extends BasePresenter {
