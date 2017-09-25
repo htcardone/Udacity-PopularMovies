@@ -2,11 +2,13 @@ package com.htcardone.popularmovies.data.remote;
 
 import android.support.annotation.NonNull;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.htcardone.popularmovies.BuildConfig;
 import com.htcardone.popularmovies.data.MoviesDataSource;
 
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,8 +27,13 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     private String language;
 
     private MoviesRemoteDataSource() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.themoviedb.org/3/")
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

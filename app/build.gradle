@@ -33,6 +33,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.0.1'
     compile 'com.android.support:design:26.0.1'
 
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'

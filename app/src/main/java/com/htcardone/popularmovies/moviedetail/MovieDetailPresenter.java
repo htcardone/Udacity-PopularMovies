@@ -46,6 +46,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
     }
 
     private void loadReviews(int movieId) {
+        // TODO implement loading indicator on UI
         mMoviesRepository.getReviews(movieId, new MoviesDataSource.LoadReviewsCallback() {
             @Override
             public void onReviewsLoaded(List<Review> reviews) {
@@ -60,6 +61,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
     }
 
     private void loadVideos(int movieId) {
+        // TODO implement loading indicator on UI
         mMoviesRepository.getVideos(movieId, new MoviesDataSource.LoadVideosCallback() {
             @Override
             public void onVideosLoaded(List<Video> videos) {
