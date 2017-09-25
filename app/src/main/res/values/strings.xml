@@ -28,6 +28,8 @@
     <string name="review_open_full_review">Open Full Review</string>
 
     <!-- Fakes -->
+    <string name="fake_title">Mad Max: Fury Road</string>
+    <string name="fake_release_date">5/13/15</string>
     <string name="fake_large_paragraph">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget augue ac elit
         tincidunt finibus. Nam ac maximus enim. Nulla tellus purus, ullamcorper vitae ex aliquam,

@@ -83,6 +83,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="1dp"
                 android:textAppearance="@style/MovieDetailValueFont"
+                tools:text="@string/fake_title"
                 app:layout_constraintLeft_toRightOf="@+id/movie_detail_tv_poster_image"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_original_title_label" />
 
@@ -103,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:textAppearance="@style/MovieDetailValueFont"
+                tools:text="@string/fake_release_date"
                 app:layout_constraintLeft_toRightOf="@+id/movie_detail_tv_poster_image"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_release_date_label" />
 
@@ -133,6 +135,7 @@
                 android:id="@+id/movie_detail_tv_overview_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="@string/fake_large_paragraph"
                 android:layout_marginTop="4dp"
                 android:padding="8dp"
                 android:textAppearance="@style/MovieDetailOverviewFont"
