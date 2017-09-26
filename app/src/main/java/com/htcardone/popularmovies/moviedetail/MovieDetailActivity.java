@@ -40,8 +40,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     Toolbar mToolbar;
     @BindView(R.id.movie_detail_backdrop_image)
     ImageView mBackdropImageView;
-    @BindView(R.id.movie_detail_tv_poster_image)
-    ImageView mPosterImageView;
     @BindView(R.id.movie_detail_tv_original_title_value)
     TextView mOriginalTitleTextView;
     @BindView(R.id.movie_detail_tv_release_date_value)
@@ -158,10 +156,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         Picasso.with(this)
                 .load(movie.getBackdropPath())
                 .into(mBackdropImageView);
-
-        Picasso.with(this)
-                .load(movie.getPosterPath())
-                .into(mPosterImageView);
     }
 
     @Override
