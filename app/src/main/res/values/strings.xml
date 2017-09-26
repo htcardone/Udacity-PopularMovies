@@ -46,4 +46,6 @@
         that\'s right. Finally, a Marvel superhero movie you can confidently stamp the drama genre
         tag on.
     </string>
+
+    <string name="content_authority">com.htcardone.popularmovies</string>
 </resources>
