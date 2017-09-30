@@ -1,6 +1,7 @@
 package com.htcardone.popularmovies.moviedetail;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -11,14 +12,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.htcardone.popularmovies.R;
+import com.htcardone.popularmovies.data.MoviesRepository;
+import com.htcardone.popularmovies.data.local.MoviesContract;
+import com.htcardone.popularmovies.data.local.MoviesLocalDataSource;
 import com.htcardone.popularmovies.data.model.Movie;
 import com.htcardone.popularmovies.data.model.Review;
 import com.htcardone.popularmovies.data.model.Video;
+import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -52,8 +59,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     RecyclerView mVideosRecyclerView;
     @BindView(R.id.movie_detail_rv_reviews)
     RecyclerView mReviewsRecyclerView;
+    @BindView(R.id.movie_detail_favorite_btn)
+    Button mFavoriteButton;
 
     private MovieDetailContract.Presenter mPresenter;
+    private int mMovieId;
 
     private VideosAdapter mVideosAdapter;
     private ReviewsAdapter mReviewsAdapter;
@@ -76,15 +86,17 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mPresenter = new MovieDetailPresenter(this);
+        mPresenter = new MovieDetailPresenter(MoviesRepository.getInstance(
+                MoviesRemoteDataSource.getInstance(), MoviesLocalDataSource.getInstance(this)),
+                this);
 
         Intent intentFromMovies = getIntent();
         if (intentFromMovies.hasExtra(EXTRA_MOVIE_ID) &&
                 intentFromMovies.hasExtra(EXTRA_SORT_TYPE)) {
 
-            int movieId = intentFromMovies.getExtras().getInt(EXTRA_MOVIE_ID);
+            mMovieId = intentFromMovies.getExtras().getInt(EXTRA_MOVIE_ID);
             int sortType = intentFromMovies.getExtras().getInt(EXTRA_SORT_TYPE);
-            mPresenter.loadMovie(movieId, sortType);
+            mPresenter.loadMovie(mMovieId, sortType);
         }
 
         // Videos RecyclerView setup
@@ -135,7 +147,26 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
-    public void showMovieDetails(Movie movie) {
+    public void updateFavoriteButton(boolean isFavorite) {
+        if (isFavorite) {
+            mFavoriteButton.setText(getString(R.string.movie_detail_btn_favorite_unset));
+        } else {
+            mFavoriteButton.setText(getString(R.string.movie_detail_btn_favorite_set));
+        }
+    }
+
+    @Override
+    public void setMovieFavorite(Movie movie) {
+
+    }
+
+    @Override
+    public void unsetMovieFavorite(Movie movie) {
+
+    }
+
+    @Override
+    public void showMovieDetails(Movie movie, boolean isFavorite) {
         setTitle(movie.getTitle());
         mOriginalTitleTextView.setText(movie.getOriginalTitle());
 
@@ -153,8 +184,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         mOverviewTextView.setText(movie.getOverview());
         mRatingBar.setRating(movie.getVoteAverage() / 2);
 
+        updateFavoriteButton(isFavorite);
+        Log.d(LOG_TAG, "showMovieDetails isFavorie=" + isFavorite);
+
         Picasso.with(this)
-                .load(movie.getBackdropPath())
+                //TODO check user connection type to determine the image size
+                .load("http://image.tmdb.org/t/p/w500" + movie.getBackdropPath())
                 .into(mBackdropImageView);
     }
 
@@ -166,5 +201,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Override
     public void showVideos(List<Video> videoList) {
         mVideosAdapter.replaceData(videoList);
+    }
+
+    public void onFavoriteBtnClick(View view) {
+        mPresenter.onFavoriteButtonClicked();
     }
 }

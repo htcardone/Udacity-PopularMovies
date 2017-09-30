@@ -18,6 +18,8 @@
     <string name="movie_detail_tv_original_title_label">Original Title</string>
     <string name="movie_detail_tv_release_date_label">Release Date</string>
     <string name="movie_detail_tv_user_rating_label">User Rating</string>
+    <string name="movie_detail_btn_favorite_set">Mark as favorite</string>
+    <string name="movie_detail_btn_favorite_unset">Remove from favorites</string>
 
     <!-- TODO improve content description -->
     <string name="movie_detail_backdrop_img_desc">Movie backdrop</string>

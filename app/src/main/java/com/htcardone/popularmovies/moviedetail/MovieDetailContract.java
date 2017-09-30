@@ -14,14 +14,18 @@ import java.util.List;
 
 public interface MovieDetailContract {
     interface View extends BaseView<Presenter> {
-        void showMovieDetails(Movie movie);
+        void showMovieDetails(Movie movie, boolean isFavorite);
         void showReviews(List<Review> reviewList);
         void showVideos(List<Video> videoList);
         void openYouTubeVideo(String youTubeKey);
         void openReviewUrl(String reviewUrl);
+        void updateFavoriteButton(boolean isFavorite);
+        void setMovieFavorite(Movie movie);
+        void unsetMovieFavorite(Movie movie);
     }
 
     interface Presenter extends BasePresenter {
         void loadMovie(int movieId, int sortType);
+        void onFavoriteButtonClicked();
     }
 }

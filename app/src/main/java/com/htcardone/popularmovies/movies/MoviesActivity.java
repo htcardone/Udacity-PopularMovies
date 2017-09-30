@@ -7,12 +7,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.htcardone.popularmovies.R;
+import com.htcardone.popularmovies.data.local.MoviesLocalDataSource;
 import com.htcardone.popularmovies.data.model.Movie;
 import com.htcardone.popularmovies.data.MoviesRepository;
 import com.htcardone.popularmovies.data.remote.MoviesRemoteDataSource;
@@ -70,7 +72,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
 
         // Create the presenter
         mMoviesPresenter = new MoviesPresenter(MoviesRepository.getInstance(
-                MoviesRemoteDataSource.getInstance()), this);
+                MoviesRemoteDataSource.getInstance(), MoviesLocalDataSource.getInstance(this)),
+                this);
 
         // Load previously saved state, if available.
         if (savedInstanceState != null) {

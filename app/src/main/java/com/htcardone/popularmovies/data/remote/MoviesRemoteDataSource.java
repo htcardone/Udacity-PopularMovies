@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.htcardone.popularmovies.BuildConfig;
 import com.htcardone.popularmovies.data.MoviesDataSource;
+import com.htcardone.popularmovies.data.model.Movie;
 
 import java.util.Locale;
 
@@ -75,6 +76,16 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
                 callback.onDataNotAvailable();
             }
         });
+    }
+
+    @Override
+    public long saveMovie(Movie movie, int sortType) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteAllMovies(int sortType) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

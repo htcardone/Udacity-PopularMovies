@@ -5,33 +5,32 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 /**
  * Created by Henrique Cardone on 25/09/2017.
  */
 
-public class MovieProvider extends ContentProvider {
+public class FavoritesProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private static final String LOG_TAG = MovieProvider.class.getSimpleName();
+    private static final String LOG_TAG = FavoritesProvider.class.getSimpleName();
     private MoviesDbHelper mDbHelper;
 
     // Codes for the UriMatcher
-    private static final int MOVIE = 100;
-    private static final int MOVIE_WITH_ID = 200;
+    private static final int FAVORITE = 100;
+    private static final int FAVORITE_WITH_ID = 200;
 
     private static UriMatcher buildUriMatcher(){
         // Build a UriMatcher by adding a specific code to return based on a match
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = MoviesContract.CONTENT_AUTHORITY;
 
-        matcher.addURI(authority, MoviesContract.MovieEntry.TABLE_MOVIE, MOVIE);
-        matcher.addURI(authority, MoviesContract.MovieEntry.TABLE_MOVIE + "/#", MOVIE_WITH_ID);
+        matcher.addURI(authority, MoviesContract.FavoriteEntry.TABLE_FAVORITE, FAVORITE);
+        matcher.addURI(authority, MoviesContract.FavoriteEntry.TABLE_FAVORITE +
+                "/#", FAVORITE_WITH_ID);
 
         return matcher;
     }
@@ -47,19 +46,19 @@ public class MovieProvider extends ContentProvider {
                         String sortOrder) {
 
         switch(sUriMatcher.match(uri)){
-            case MOVIE:
+            case FAVORITE:
                 return mDbHelper.getReadableDatabase().query(
-                        MoviesContract.MovieEntry.TABLE_MOVIE,
+                        MoviesContract.FavoriteEntry.TABLE_FAVORITE,
                         projection,
                         selection,
                         selectionArgs,
                         null, null, sortOrder);
 
-            case MOVIE_WITH_ID:
+            case FAVORITE_WITH_ID:
                 return mDbHelper.getReadableDatabase().query(
-                        MoviesContract.MovieEntry.TABLE_MOVIE,
+                        MoviesContract.FavoriteEntry.TABLE_FAVORITE,
                         projection,
-                        MoviesContract.MovieEntry.COLUMN_NAME_MOVIE_ID + "=?",
+                        MoviesContract.MovieEntry.COLUMN_MOVIE_ID + "=?",
                         new String[] {String.valueOf(ContentUris.parseId(uri))},
                         null, null, sortOrder);
 
@@ -71,8 +70,8 @@ public class MovieProvider extends ContentProvider {
     @Override
     public String getType(@NonNull Uri uri) {
         switch (sUriMatcher.match(uri)) {
-            case MOVIE: return MoviesContract.MovieEntry.CONTENT_DIR_TYPE;
-            case MOVIE_WITH_ID: return MoviesContract.MovieEntry.CONTENT_ITEM_TYPE;
+            case FAVORITE: return MoviesContract.FavoriteEntry.CONTENT_DIR_TYPE;
+            case FAVORITE_WITH_ID: return MoviesContract.FavoriteEntry.CONTENT_ITEM_TYPE;
             default: throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
     }
@@ -84,9 +83,9 @@ public class MovieProvider extends ContentProvider {
         Uri returnUri;
 
         switch (sUriMatcher.match(uri)) {
-            case MOVIE:
-                long _id = db.insert(MoviesContract.MovieEntry.TABLE_MOVIE, null, values);
-                if (_id > 0) returnUri = MoviesContract.MovieEntry.buildMoviesUri(_id);
+            case FAVORITE:
+                long _id = db.insert(MoviesContract.FavoriteEntry.TABLE_FAVORITE, null, values);
+                if (_id > 0) returnUri = MoviesContract.FavoriteEntry.buildFavoritesUri(_id);
                 else throw new android.database.SQLException("Failed to insert row into: " + uri);
                 break;
 
@@ -104,15 +103,15 @@ public class MovieProvider extends ContentProvider {
         int numDeleted;
 
         switch (sUriMatcher.match(uri)) {
-            case MOVIE:
+            case FAVORITE:
                 numDeleted = db.delete(
-                        MoviesContract.MovieEntry.TABLE_MOVIE, selection, selectionArgs);
+                        MoviesContract.FavoriteEntry.TABLE_FAVORITE, selection, selectionArgs);
                 break;
 
-            case MOVIE_WITH_ID:
+            case FAVORITE_WITH_ID:
                 numDeleted = db.delete(
-                        MoviesContract.MovieEntry.TABLE_MOVIE,
-                        MoviesContract.MovieEntry.COLUMN_NAME_MOVIE_ID + "=?",
+                        MoviesContract.FavoriteEntry.TABLE_FAVORITE,
+                        MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_ID + "=?",
                         new String[] {String.valueOf(ContentUris.parseId(uri))});
                 break;
             default: throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -132,16 +131,16 @@ public class MovieProvider extends ContentProvider {
         }
 
         switch (sUriMatcher.match(uri)) {
-            case MOVIE:
-                numUpdated = db.update(MoviesContract.MovieEntry.TABLE_MOVIE,
+            case FAVORITE:
+                numUpdated = db.update(MoviesContract.FavoriteEntry.TABLE_FAVORITE,
                         contentValues,selection, selectionArgs);
                 break;
 
-            case MOVIE_WITH_ID:
+            case FAVORITE_WITH_ID:
                 numUpdated = db.update(
-                        MoviesContract.MovieEntry.TABLE_MOVIE,
+                        MoviesContract.FavoriteEntry.TABLE_FAVORITE,
                         contentValues,
-                        MoviesContract.MovieEntry.COLUMN_NAME_MOVIE_ID + "=?",
+                        MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_ID + "=?",
                         new String[] {String.valueOf(ContentUris.parseId(uri))});
                 break;
             default: throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -154,7 +153,7 @@ public class MovieProvider extends ContentProvider {
         return numUpdated;
     }
 
-    @Override
+    /*@Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -197,5 +196,5 @@ public class MovieProvider extends ContentProvider {
 
             default: return super.bulkInsert(uri, values);
         }
-    }
+    }*/
 }

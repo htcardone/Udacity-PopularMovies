@@ -28,6 +28,8 @@ public interface MoviesDataSource {
     int TYPE_SORT_BY_TOP_RATED = 1; // mCaches pos 1
 
     void getMovies(int sortType, @NonNull LoadMoviesCallback callback);
+    long saveMovie(Movie movie, int sortType);
+    void deleteAllMovies(int sortType);
     void getVideos(int movieId, @NonNull LoadVideosCallback callback);
     void getReviews(int movieId, @NonNull LoadReviewsCallback callback);
 }

@@ -2,6 +2,7 @@ package com.htcardone.popularmovies.movies;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.model.Movie;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import butterknife.ButterKnife;
 import static android.support.v4.util.Preconditions.checkNotNull;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemViewHolder> {
+    private static final String LOG_TAG = MoviesAdapter.class.getSimpleName();
     private List<Movie> mDataSet;
     private final Context mContext;
     private final ListItemClickListener mOnClickListener;
@@ -33,7 +36,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemV
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnClickListener.onListItemClick(getAdapterPosition());
+                    mOnClickListener.onListItemClick(mDataSet.get(getAdapterPosition()).getId());
                 }
             });
         }
@@ -46,12 +49,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemV
     public MoviesAdapter(Context context, ListItemClickListener clickListener) {
         mContext = context;
         mOnClickListener = clickListener;
-    }
-
-    public MoviesAdapter(Context context, ListItemClickListener clickListener, List<Movie> dataSet) {
-        mContext = context;
-        mOnClickListener = clickListener;
-        mDataSet = checkNotNull(dataSet);
     }
 
     public void replaceData(List<Movie> movies) {
@@ -70,7 +67,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemV
     @Override
     public void onBindViewHolder(MovieItemViewHolder holder, int position) {
         Picasso.with(mContext)
-                .load(mDataSet.get(position).getPosterPath())
+                //TODO check user connection type to determine the image size
+                .load("http://image.tmdb.org/t/p/w500" + mDataSet.get(position).getPosterPath())
                 .placeholder(R.drawable.poster_placeholder)
                 .into(holder.posterImageView);
     }
