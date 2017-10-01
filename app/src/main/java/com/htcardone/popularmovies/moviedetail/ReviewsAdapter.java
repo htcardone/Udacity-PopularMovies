@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.model.Review;
-import com.htcardone.popularmovies.data.model.Video;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

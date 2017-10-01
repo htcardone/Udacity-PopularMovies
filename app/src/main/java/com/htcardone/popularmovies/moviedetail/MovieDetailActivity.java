@@ -1,7 +1,6 @@
 package com.htcardone.popularmovies.moviedetail;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 
 import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.MoviesRepository;
-import com.htcardone.popularmovies.data.local.MoviesContract;
 import com.htcardone.popularmovies.data.local.MoviesLocalDataSource;
 import com.htcardone.popularmovies.data.model.Movie;
 import com.htcardone.popularmovies.data.model.Review;

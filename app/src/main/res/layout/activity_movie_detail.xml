@@ -59,7 +59,6 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/movie_detail_tv_original_title_label"
                 android:textAppearance="@style/MovieDetailLabelFont"
-                android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/movie_detail_tv_release_date_label"
                 android:textAppearance="@style/MovieDetailLabelFont"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="7dp"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_original_title_value" />
@@ -98,7 +97,6 @@
                 android:textAppearance="@style/MovieDetailValueFont"
                 tools:text="@string/fake_release_date"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_release_date_label"
-                android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
@@ -110,7 +108,6 @@
                 android:text="@string/movie_detail_tv_user_rating_label"
                 android:textAppearance="@style/MovieDetailLabelFont"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_release_date_value"
-                android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <RatingBar
@@ -123,7 +120,6 @@
                 android:isIndicator="true"
                 android:numStars="5"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_user_rating_label"
-                android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <Button
@@ -153,9 +149,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Trailers &amp; Clips"
+                android:text="@string/movie_detail_trailers_label"
                 android:textAppearance="@style/MovieDetailLabelFont"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_overview_value" />
@@ -166,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="0dp"
-                android:text="Couldn't found any"
+                android:text="@string/movie_detail_empty_msg"
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -186,9 +181,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:text="User Reviews"
+                android:text="@string/movie_detail_reviews_label"
                 android:textAppearance="@style/MovieDetailLabelFont"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_rv_videos" />
@@ -199,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="0dp"
-                android:text="Couldn't found any"
+                android:text="@string/movie_detail_empty_msg"
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />

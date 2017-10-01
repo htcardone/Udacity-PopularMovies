@@ -1,5 +1,6 @@
 package com.htcardone.popularmovies.data.local;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,11 +25,11 @@ public class MoviesLocalDataSource implements MoviesDataSource {
 
     private static MoviesLocalDataSource INSTANCE;
 
-    private Context mContext;
+    private ContentResolver mContentResolver;
     private MoviesDbHelper mMoviesDbHelper;
 
     private MoviesLocalDataSource(Context context) {
-        mContext = context;
+        mContentResolver = context.getContentResolver();
         mMoviesDbHelper = new MoviesDbHelper(context);
     }
 
@@ -125,8 +126,8 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     }
 
     public boolean isMovieFavorite(int movieId) {
-        Cursor cursor = mContext.getContentResolver()
-            .query(ContentUris.withAppendedId(MoviesContract.FavoriteEntry.CONTENT_URI, movieId),
+        Cursor cursor = mContentResolver .query(
+                ContentUris.withAppendedId(MoviesContract.FavoriteEntry.CONTENT_URI, movieId),
                 null,null, null, null);
 
         if (cursor == null) return false;
@@ -146,14 +147,13 @@ public class MoviesLocalDataSource implements MoviesDataSource {
         values.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
         values.put(MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
 
-        Uri uri = mContext.getContentResolver()
-                .insert(MoviesContract.FavoriteEntry.CONTENT_URI, values);
+        Uri uri = mContentResolver.insert(MoviesContract.FavoriteEntry.CONTENT_URI, values);
 
         return uri != null;
     }
 
     public boolean unsetMovieAsFavorite(int movieId) {
-        int deleteRows = mContext.getContentResolver().delete(
+        int deleteRows = mContentResolver.delete(
                 ContentUris.withAppendedId(MoviesContract.FavoriteEntry.CONTENT_URI, movieId),
                         null, null);
 
@@ -163,7 +163,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     public List<Movie> getFavoriteMovies() {
         ArrayList<Movie> movies = new ArrayList<>();
 
-        Cursor cursor = mContext.getContentResolver() .query(
+        Cursor cursor = mContentResolver.query(
                 MoviesContract.FavoriteEntry.CONTENT_URI, null,null, null, null);
 
         if (cursor == null) return movies;

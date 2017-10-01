@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.htcardone.popularmovies.R;
 import com.htcardone.popularmovies.data.model.Video;
-import com.htcardone.popularmovies.movies.MoviesAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,10 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.support.v4.util.Preconditions.checkNotNull;
-
-/**
- * Created by Henrique Cardone on 21/09/2017.
- */
 
 public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoItemViewHolder> {
     private List<Video> mDataSet;

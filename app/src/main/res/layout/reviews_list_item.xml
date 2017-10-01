@@ -45,7 +45,6 @@
                 android:textStyle="bold"
                 card_view:layout_constraintBaseline_toBaselineOf="@+id/reviews_open_review_bt"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 card_view:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
@@ -56,8 +55,7 @@
                 tools:text="author_username"
                 card_view:layout_constraintBaseline_toBaselineOf="@+id/reviews_open_review_bt"
                 card_view:layout_constraintLeft_toRightOf="@+id/textView2"
-                android:layout_marginStart="2dp"
-                android:layout_marginLeft="2dp" />
+                android:layout_marginStart="2dp" />
 
             <Button
                 android:id="@+id/reviews_open_review_bt"
@@ -66,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/colorPrimary"
                 android:text="@string/review_open_full_review"

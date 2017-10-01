@@ -5,10 +5,6 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by Henrique Cardone on 25/09/2017.
- */
-
 public class MoviesContract {
     public static final String CONTENT_AUTHORITY = "com.htcardone.popularmovies";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);

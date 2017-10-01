@@ -119,7 +119,7 @@ public class MoviesRepository implements MoviesDataSource {
     public void deleteAllMovies(int sortType) {
         mLocalDataSource.deleteAllMovies(sortType);
 
-        Map cache = mMoviesCaches.get(sortType);
+        Map<Integer, Movie> cache = mMoviesCaches.get(sortType);
         if (cache == null) cache = new LinkedHashMap<>();
         cache.clear();
 
@@ -149,7 +149,7 @@ public class MoviesRepository implements MoviesDataSource {
     }
 
     private void refreshCache(List<Movie> movies, int type) {
-        Map cache = mMoviesCaches.get(type);
+        Map<Integer, Movie> cache = mMoviesCaches.get(type);
 
         if (cache == null) {
             cache = new LinkedHashMap<>();

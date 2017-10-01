@@ -10,10 +10,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-/**
- * Created by Henrique Cardone on 25/09/2017.
- */
-
 public class FavoritesProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private static final String LOG_TAG = FavoritesProvider.class.getSimpleName();
@@ -42,8 +38,8 @@ public class FavoritesProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-                        String sortOrder) {
+    public Cursor query(@NonNull Uri uri, @NonNull String[] projection, @NonNull String selection,
+                        @NonNull String[] selectionArgs, @NonNull String sortOrder) {
 
         switch(sUriMatcher.match(uri)){
             case FAVORITE:

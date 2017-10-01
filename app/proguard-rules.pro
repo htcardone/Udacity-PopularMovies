@@ -34,3 +34,5 @@
 -keepattributes Exceptions
 # Picasso
 -dontwarn com.squareup.okhttp.**
+
+-dontwarn okio.**

@@ -8,7 +8,7 @@ import com.squareup.picasso.Picasso;
 public class PopularMovies extends Application {
     public void onCreate() {
         super.onCreate();
-        Stetho.initializeWithDefaults(this);
+        if (BuildConfig.DEBUG) Stetho.initializeWithDefaults(this);
         Picasso.with(getApplicationContext()).setIndicatorsEnabled(BuildConfig.DEBUG);
         Picasso.with(getApplicationContext()).setLoggingEnabled(BuildConfig.DEBUG);
     }

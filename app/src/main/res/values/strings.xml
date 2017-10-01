@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- TODO translate strings to pt -->
     <string name="app_name">Popular Movies</string>
 
@@ -22,10 +22,16 @@
     <string name="movie_detail_tv_user_rating_label">User Rating</string>
     <string name="movie_detail_btn_favorite_set">Mark as favorite</string>
     <string name="movie_detail_btn_favorite_unset">Remove from favorites</string>
+    <string name="movie_detail_trailers_label">Trailers &amp; Clips</string>
+    <string name="movie_detail_reviews_label">User Reviews</string>
+    <string name="movie_detail_empty_msg">Could not found any</string>
 
     <!-- TODO improve content description -->
     <string name="movie_detail_backdrop_img_desc">Movie backdrop</string>
     <string name="movie_detail_poster_img_desc">Movie poster</string>
+    <string name="movie_detail_video_thumbnail_img_desc">Trailer thumbnail</string>
+    <string name="movie_detail_video_play_icon">Trailer play icon</string>
+    <string name="movie_detail_video_youtube_icon">Youtube icon</string>
 
     <!-- reviews_list_item -->
     <string name="review_by">By</string>
@@ -34,7 +40,7 @@
     <!-- Fakes -->
     <string name="fake_title">Mad Max: Fury Road</string>
     <string name="fake_release_date">5/13/15</string>
-    <string name="fake_large_paragraph">
+    <string name="fake_large_paragraph" tools:ignore="Typos">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget augue ac elit
         tincidunt finibus. Nam ac maximus enim. Nulla tellus purus, ullamcorper vitae ex aliquam,
         finibus eleifend nunc. Nunc dapibus, nibh quis tempus dapibus, ante neque accumsan justo,
