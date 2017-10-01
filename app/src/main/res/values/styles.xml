@@ -31,4 +31,9 @@
         <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
+    <style name="FavoriteButton" parent="Theme.AppCompat.Light">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

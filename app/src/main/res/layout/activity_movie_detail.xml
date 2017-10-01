@@ -130,6 +130,7 @@
                 android:id="@+id/movie_detail_favorite_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:theme="@style/FavoriteButton"
                 android:text="@string/movie_detail_btn_favorite_set"
                 android:onClick="onFavoriteBtnClick"
                 android:layout_marginTop="8dp"
