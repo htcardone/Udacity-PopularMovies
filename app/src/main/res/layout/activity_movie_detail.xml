@@ -160,6 +160,17 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_tv_overview_value" />
 
+            <TextView
+                android:id="@+id/movie_detail_tv_videos_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="0dp"
+                android:text="Couldn't found any"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/movie_detail_rv_videos"
                 android:layout_width="0dp"
@@ -181,6 +192,17 @@
                 android:textAppearance="@style/MovieDetailLabelFont"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/movie_detail_rv_videos" />
+
+            <TextView
+                android:id="@+id/movie_detail_tv_reviews_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="0dp"
+                android:text="Couldn't found any"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/movie_detail_rv_reviews"

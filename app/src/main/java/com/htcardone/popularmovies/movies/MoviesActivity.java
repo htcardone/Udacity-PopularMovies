@@ -177,6 +177,8 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
             setTitle(R.string.title_popular);
         } else if (sortType == MoviesPresenter.TYPE_SORT_BY_TOP_RATED) {
             setTitle(R.string.title_rated);
+        } else if (sortType == MoviesPresenter.TYPE_FAVORITES) {
+            setTitle(R.string.title_favorites);
         } else {
             setTitle(R.string.app_name);
         }

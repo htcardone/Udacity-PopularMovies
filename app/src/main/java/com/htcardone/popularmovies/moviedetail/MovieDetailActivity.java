@@ -55,6 +55,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     TextView mOverviewTextView;
     @BindView(R.id.movie_detail_rb_rating)
     RatingBar mRatingBar;
+    @BindView(R.id.movie_detail_tv_videos_empty)
+    TextView mEmptyVideosTextView;
+    @BindView(R.id.movie_detail_tv_reviews_empty)
+    TextView mEmptyReviewsTextView;
     @BindView(R.id.movie_detail_rv_videos)
     RecyclerView mVideosRecyclerView;
     @BindView(R.id.movie_detail_rv_reviews)
@@ -156,16 +160,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
-    public void setMovieFavorite(Movie movie) {
-
-    }
-
-    @Override
-    public void unsetMovieFavorite(Movie movie) {
-
-    }
-
-    @Override
     public void showMovieDetails(Movie movie, boolean isFavorite) {
         setTitle(movie.getTitle());
         mOriginalTitleTextView.setText(movie.getOriginalTitle());
@@ -185,7 +179,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         mRatingBar.setRating(movie.getVoteAverage() / 2);
 
         updateFavoriteButton(isFavorite);
-        Log.d(LOG_TAG, "showMovieDetails isFavorie=" + isFavorite);
+        Log.d(LOG_TAG, "showMovieDetails isFavorite=" + isFavorite);
 
         Picasso.with(this)
                 //TODO check user connection type to determine the image size
@@ -195,12 +189,24 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void showReviews(List<Review> reviewList) {
+        mEmptyReviewsTextView.setVisibility(View.GONE);
         mReviewsAdapter.replaceData(reviewList);
     }
 
     @Override
+    public void showReviewEmptyMsg() {
+        mEmptyReviewsTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showVideos(List<Video> videoList) {
+        mEmptyVideosTextView.setVisibility(View.GONE);
         mVideosAdapter.replaceData(videoList);
+    }
+
+    @Override
+    public void showVideosEmptyMsg() {
+        mEmptyVideosTextView.setVisibility(View.VISIBLE);
     }
 
     public void onFavoriteBtnClick(View view) {

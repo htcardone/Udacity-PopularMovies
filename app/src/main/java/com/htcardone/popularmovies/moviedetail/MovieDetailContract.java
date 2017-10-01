@@ -16,12 +16,12 @@ public interface MovieDetailContract {
     interface View extends BaseView<Presenter> {
         void showMovieDetails(Movie movie, boolean isFavorite);
         void showReviews(List<Review> reviewList);
+        void showReviewEmptyMsg();
         void showVideos(List<Video> videoList);
+        void showVideosEmptyMsg();
         void openYouTubeVideo(String youTubeKey);
         void openReviewUrl(String reviewUrl);
         void updateFavoriteButton(boolean isFavorite);
-        void setMovieFavorite(Movie movie);
-        void unsetMovieFavorite(Movie movie);
     }
 
     interface Presenter extends BasePresenter {

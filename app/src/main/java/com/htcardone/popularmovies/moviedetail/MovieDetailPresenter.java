@@ -73,7 +73,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                // TODO show error message on UI
+                mMovieDetailView.showReviewEmptyMsg();
             }
         });
     }
@@ -88,7 +88,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                // TODO show error message on UI
+                mMovieDetailView.showVideosEmptyMsg();
             }
         });
     }
