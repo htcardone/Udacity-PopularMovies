@@ -138,6 +138,12 @@ public class MoviesActivity extends AppCompatActivity implements MoviesContract.
             return true;
         }
 
+        if (id == R.id.movies_action_show_favorites) {
+            mMoviesPresenter.loadMovies(false, MoviesPresenter.TYPE_FAVORITES);
+            item.setChecked(true);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

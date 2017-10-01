@@ -21,7 +21,6 @@ import static android.support.v4.util.Preconditions.checkNotNull;
 public class MoviesLocalDataSource implements MoviesDataSource {
 
     private static final String LOG_TAG = MoviesLocalDataSource.class.getSimpleName();
-    public static final int LOADER_ID = 25031991;
 
     private static MoviesLocalDataSource INSTANCE;
 
@@ -136,13 +135,19 @@ public class MoviesLocalDataSource implements MoviesDataSource {
         return cursor.getCount() > 0;
     }
 
-    public boolean setMovieAsFavorite(int movieId, String movieTitle) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_ID, movieId);
-        contentValues.put(MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_TITLE, movieTitle);
+    public boolean setMovieAsFavorite(Movie movie) {
+        ContentValues values = new ContentValues();
+        values.put(MovieEntry.COLUMN_MOVIE_ID, movie.getId());
+        values.put(MovieEntry.COLUMN_TITLE, movie.getTitle());
+        values.put(MovieEntry.COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
+        values.put(MovieEntry.COLUMN_OVERVIEW, movie.getOverview());
+        values.put(MovieEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
+        values.put(MovieEntry.COLUMN_BACKDROP_PATH, movie.getBackdropPath());
+        values.put(MovieEntry.COLUMN_RELEASE_DATE, movie.getReleaseDate());
+        values.put(MovieEntry.COLUMN_VOTE_AVERAGE, movie.getVoteAverage());
 
         Uri uri = mContext.getContentResolver()
-                .insert(MoviesContract.FavoriteEntry.CONTENT_URI, contentValues);
+                .insert(MoviesContract.FavoriteEntry.CONTENT_URI, values);
 
         return uri != null;
     }
@@ -153,6 +158,31 @@ public class MoviesLocalDataSource implements MoviesDataSource {
                         null, null);
 
         return deleteRows > 0;
+    }
+
+    public List<Movie> getFavoriteMovies() {
+        ArrayList<Movie> movies = new ArrayList<>();
+
+        Cursor cursor = mContext.getContentResolver() .query(
+                MoviesContract.FavoriteEntry.CONTENT_URI, null,null, null, null);
+
+        if (cursor == null) return movies;
+
+        while (cursor.moveToNext()) {
+            movies.add(new Movie(
+                    cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_OVERVIEW)),
+                    cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_ORIGINAL_TITLE)),
+                    cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_TITLE)),
+                    cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_POSTER_PATH)),
+                    cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_BACKDROP_PATH)),
+                    cursor.getString(cursor.getColumnIndex(MovieEntry.COLUMN_RELEASE_DATE)),
+                    cursor.getFloat(cursor.getColumnIndex(MovieEntry.COLUMN_VOTE_AVERAGE)),
+                    cursor.getInt(cursor.getColumnIndex(MovieEntry.COLUMN_MOVIE_ID))
+            ));
+        }
+
+        cursor.close();
+        return movies;
     }
 
     @Override

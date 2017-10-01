@@ -32,8 +32,15 @@ public class MoviesDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_FAVORITES_TABLE =
             "CREATE TABLE " + MoviesContract.FavoriteEntry.TABLE_FAVORITE + " (" +
                     MoviesContract.FavoriteEntry._ID + INTEGER_TYPE + " PRIMARY KEY, " +
-                    MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_ID + INTEGER_TYPE + COMMA_SEP +
-                    MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_TITLE + TEXT_TYPE +
+                    MoviesContract.MovieEntry.COLUMN_MOVIE_ID + INTEGER_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_TITLE + TEXT_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_ORIGINAL_TITLE + TEXT_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_OVERVIEW + TEXT_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_POSTER_PATH + TEXT_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_BACKDROP_PATH + TEXT_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_RELEASE_DATE + TEXT_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_VOTE_AVERAGE + FLOAT_TYPE + COMMA_SEP +
+                    MoviesContract.MovieEntry.COLUMN_SORT_TYPE + INTEGER_TYPE +
                     " );";
 
     public MoviesDbHelper(Context context) {

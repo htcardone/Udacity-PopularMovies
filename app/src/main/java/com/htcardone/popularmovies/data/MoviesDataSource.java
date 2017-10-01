@@ -26,6 +26,7 @@ public interface MoviesDataSource {
 
     int TYPE_SORT_BY_POPULAR = 0; // mCaches pos 0
     int TYPE_SORT_BY_TOP_RATED = 1; // mCaches pos 1
+    int TYPE_FAVORITES = 2; // mCaches pos 2
 
     void getMovies(int sortType, @NonNull LoadMoviesCallback callback);
     long saveMovie(Movie movie, int sortType);

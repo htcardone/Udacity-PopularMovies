@@ -22,12 +22,13 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     public final static int TYPE_SORT_BY_POPULAR = MoviesRepository.TYPE_SORT_BY_POPULAR;
     public final static int TYPE_SORT_BY_TOP_RATED = MoviesRepository.TYPE_SORT_BY_TOP_RATED;
+    public final static int TYPE_FAVORITES = MoviesRepository.TYPE_FAVORITES;
 
     private int currentSort = TYPE_SORT_BY_POPULAR;
 
     private final MoviesRepository mMoviesRepository;
     private final MoviesContract.View mMoviesView;
-    private final boolean mFirstLoad[] = {true, true};
+    private final boolean mFirstLoad[] = {true, true, false};
 
     public MoviesPresenter(@NonNull MoviesRepository moviesRepository,
                            @NonNull MoviesContract.View moviesView) {
@@ -45,11 +46,13 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     @Override
     public void loadMovies(boolean forceUpdate, int sortType) {
-        Log.d(LOG_TAG, "loadMovies() forceUpdate=" + forceUpdate + " sortType=" + sortType + " mFirstLoad=" + mFirstLoad[sortType]);
-        /*if (mFirstLoad[sortType]) {
-            forceUpdate = true;
-            mFirstLoad[sortType] = false;
-        }*/
+        Log.d(LOG_TAG, "loadMovies() forceUpdate=" + forceUpdate + " sortType=" + sortType
+                + " mFirstLoad=" + mFirstLoad[sortType]);
+
+        if (sortType == TYPE_FAVORITES) {
+            mMoviesRepository.getFavoriteMovies(sortType, loadMoviesCallback);
+            return;
+        }
 
         if (forceUpdate) {
             mMoviesRepository.refreshMovies();
@@ -57,6 +60,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         }
 
         mMoviesRepository.getMovies(sortType, loadMoviesCallback);
+
     }
 
     private MoviesDataSource.LoadMoviesCallback loadMoviesCallback =

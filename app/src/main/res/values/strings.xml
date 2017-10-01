@@ -4,10 +4,12 @@
 
     <string name="title_popular">Most Popular Movies</string>
     <string name="title_rated">Top Rated Movies</string>
+    <string name="title_favorites">Favorite Movies</string>
 
     <!-- Movies Menu -->
     <string name="movies_action_sort_by_popularity">Sort By Popularity</string>
     <string name="movies_action_sort_by_rating">Sort By Rating</string>
+    <string name="movies_action_show_favorites">Show Favorites</string>
     <string name="movies_action_refresh">Refresh</string>
 
     <string name="movies_load_error">

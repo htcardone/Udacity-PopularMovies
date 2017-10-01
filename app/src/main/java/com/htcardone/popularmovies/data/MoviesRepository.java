@@ -23,7 +23,7 @@ public class MoviesRepository implements MoviesDataSource {
 
     private MoviesRemoteDataSource mRemoteDataSource;
     private MoviesLocalDataSource mLocalDataSource;
-    private List<Map<Integer, Movie>> mMoviesCaches = new ArrayList<>(2);
+    private List<Map<Integer, Movie>> mMoviesCaches = new ArrayList<>(3);
 
     private boolean mCacheIsDirty = false;
 
@@ -31,6 +31,7 @@ public class MoviesRepository implements MoviesDataSource {
                              MoviesLocalDataSource moviesLocalDataSource) {
         mRemoteDataSource = moviesRemoteDataSource;
         mLocalDataSource = moviesLocalDataSource;
+        mMoviesCaches.add(null);
         mMoviesCaches.add(null);
         mMoviesCaches.add(null);
     }
@@ -172,11 +173,17 @@ public class MoviesRepository implements MoviesDataSource {
         return mLocalDataSource.isMovieFavorite(movieId);
     }
 
-    public boolean setMovieAsFavorite(int movieId, String movieTitle) {
-        return mLocalDataSource.setMovieAsFavorite(movieId, movieTitle);
+    public boolean setMovieAsFavorite(Movie movie) {
+        return mLocalDataSource.setMovieAsFavorite(movie);
     }
 
     public boolean unsetMovieAsFavorite(int movieId) {
         return mLocalDataSource.unsetMovieAsFavorite(movieId);
+    }
+
+    public void getFavoriteMovies(int sortType, final LoadMoviesCallback callback) {
+        List<Movie> movies = mLocalDataSource.getFavoriteMovies();
+        refreshCache(movies, sortType);
+        callback.onMoviesLoaded(movies, sortType);
     }
 }

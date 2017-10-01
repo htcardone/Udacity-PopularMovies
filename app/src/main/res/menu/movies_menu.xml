@@ -21,5 +21,10 @@
             android:id="@+id/movies_action_sort_by_rating"
             android:title="@string/movies_action_sort_by_rating"
             app:showAsAction="never"/>
+
+        <item
+            android:id="@+id/movies_action_show_favorites"
+            android:title="@string/movies_action_show_favorites"
+            app:showAsAction="never"/>
     </group>
 </menu>

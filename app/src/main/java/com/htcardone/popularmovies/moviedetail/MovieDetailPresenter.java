@@ -56,7 +56,7 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter {
                 mIsFavorite = false;
             }
         } else {
-            if (mMoviesRepository.setMovieAsFavorite(mMovie.getId(), mMovie.getTitle())) {
+            if (mMoviesRepository.setMovieAsFavorite(mMovie)) {
                 mMovieDetailView.updateFavoriteButton(true);
                 mIsFavorite = true;
             }

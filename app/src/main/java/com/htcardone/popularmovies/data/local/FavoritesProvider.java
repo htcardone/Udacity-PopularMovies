@@ -111,7 +111,7 @@ public class FavoritesProvider extends ContentProvider {
             case FAVORITE_WITH_ID:
                 numDeleted = db.delete(
                         MoviesContract.FavoriteEntry.TABLE_FAVORITE,
-                        MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_ID + "=?",
+                        MoviesContract.MovieEntry.COLUMN_MOVIE_ID + "=?",
                         new String[] {String.valueOf(ContentUris.parseId(uri))});
                 break;
             default: throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -140,7 +140,7 @@ public class FavoritesProvider extends ContentProvider {
                 numUpdated = db.update(
                         MoviesContract.FavoriteEntry.TABLE_FAVORITE,
                         contentValues,
-                        MoviesContract.FavoriteEntry.COLUMN_NAME_MOVIE_ID + "=?",
+                        MoviesContract.MovieEntry.COLUMN_MOVIE_ID + "=?",
                         new String[] {String.valueOf(ContentUris.parseId(uri))});
                 break;
             default: throw new UnsupportedOperationException("Unknown uri: " + uri);
